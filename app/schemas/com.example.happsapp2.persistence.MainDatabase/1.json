@@ -1,0 +1,393 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "6b24473d0ba9866e80d7cda1df4047d1",
+    "entities": [
+      {
+        "tableName": "band",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`bandID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `bandName` TEXT, `genreTags` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "bandID",
+            "columnName": "bandID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "bandName",
+            "columnName": "bandName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "genreTags",
+            "columnName": "genreTags",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "bandID"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_band_bandID",
+            "unique": false,
+            "columnNames": [
+              "bandID"
+            ],
+            "createSql": "CREATE  INDEX `index_band_bandID` ON `${TABLE_NAME}` (`bandID`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "concerts",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`concertID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT, `location` TEXT, `startTime` TEXT, `endTime` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "concertID",
+            "columnName": "concertID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "location",
+            "columnName": "location",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "startTime",
+            "columnName": "startTime",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "endTime",
+            "columnName": "endTime",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "concertID"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_concerts_concertID",
+            "unique": false,
+            "columnNames": [
+              "concertID"
+            ],
+            "createSql": "CREATE  INDEX `index_concerts_concertID` ON `${TABLE_NAME}` (`concertID`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "Places",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`placeID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `placeName` TEXT, `address` TEXT NOT NULL, `placeCategory` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "placeID",
+            "columnName": "placeID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "placeName",
+            "columnName": "placeName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "address",
+            "columnName": "address",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "placeCategory",
+            "columnName": "placeCategory",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "placeID"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "User",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `FName` TEXT NOT NULL, `LName` TEXT NOT NULL, `handle` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "userID",
+            "columnName": "userID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "FName",
+            "columnName": "FName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "LName",
+            "columnName": "LName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "handle",
+            "columnName": "handle",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "userID"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_User_userID",
+            "unique": false,
+            "columnNames": [
+              "userID"
+            ],
+            "createSql": "CREATE  INDEX `index_User_userID` ON `${TABLE_NAME}` (`userID`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "Following",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`user_ID` INTEGER NOT NULL, `band_ID` INTEGER NOT NULL, `concert_ID` INTEGER NOT NULL, `place_ID` INTEGER NOT NULL, PRIMARY KEY(`user_ID`), FOREIGN KEY(`user_ID`) REFERENCES `User`(`userID`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`band_ID`) REFERENCES `band`(`bandID`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`concert_ID`) REFERENCES `concerts`(`concertID`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`place_ID`) REFERENCES `Places`(`placeID`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "user_ID",
+            "columnName": "user_ID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "band_ID",
+            "columnName": "band_ID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "concert_ID",
+            "columnName": "concert_ID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "place_ID",
+            "columnName": "place_ID",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "user_ID"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_Following_band_ID",
+            "unique": false,
+            "columnNames": [
+              "band_ID"
+            ],
+            "createSql": "CREATE  INDEX `index_Following_band_ID` ON `${TABLE_NAME}` (`band_ID`)"
+          },
+          {
+            "name": "index_Following_concert_ID",
+            "unique": false,
+            "columnNames": [
+              "concert_ID"
+            ],
+            "createSql": "CREATE  INDEX `index_Following_concert_ID` ON `${TABLE_NAME}` (`concert_ID`)"
+          },
+          {
+            "name": "index_Following_place_ID",
+            "unique": false,
+            "columnNames": [
+              "place_ID"
+            ],
+            "createSql": "CREATE  INDEX `index_Following_place_ID` ON `${TABLE_NAME}` (`place_ID`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "User",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "user_ID"
+            ],
+            "referencedColumns": [
+              "userID"
+            ]
+          },
+          {
+            "table": "band",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "band_ID"
+            ],
+            "referencedColumns": [
+              "bandID"
+            ]
+          },
+          {
+            "table": "concerts",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "concert_ID"
+            ],
+            "referencedColumns": [
+              "concertID"
+            ]
+          },
+          {
+            "table": "Places",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "place_ID"
+            ],
+            "referencedColumns": [
+              "placeID"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "UserFollowers",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`user_ID` INTEGER NOT NULL, `follower_ID` INTEGER NOT NULL, PRIMARY KEY(`user_ID`, `follower_ID`), FOREIGN KEY(`user_ID`) REFERENCES `User`(`userID`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`follower_ID`) REFERENCES `User`(`userID`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "user_ID",
+            "columnName": "user_ID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "follower_ID",
+            "columnName": "follower_ID",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "user_ID",
+            "follower_ID"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_UserFollowers_follower_ID",
+            "unique": false,
+            "columnNames": [
+              "follower_ID"
+            ],
+            "createSql": "CREATE  INDEX `index_UserFollowers_follower_ID` ON `${TABLE_NAME}` (`follower_ID`)"
+          },
+          {
+            "name": "index_UserFollowers_user_ID",
+            "unique": false,
+            "columnNames": [
+              "user_ID"
+            ],
+            "createSql": "CREATE  INDEX `index_UserFollowers_user_ID` ON `${TABLE_NAME}` (`user_ID`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "User",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "user_ID"
+            ],
+            "referencedColumns": [
+              "userID"
+            ]
+          },
+          {
+            "table": "User",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "follower_ID"
+            ],
+            "referencedColumns": [
+              "userID"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "categories",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`title` TEXT NOT NULL, `content` TEXT, PRIMARY KEY(`title`))",
+        "fields": [
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "content",
+            "columnName": "content",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "title"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"6b24473d0ba9866e80d7cda1df4047d1\")"
+    ]
+  }
+}

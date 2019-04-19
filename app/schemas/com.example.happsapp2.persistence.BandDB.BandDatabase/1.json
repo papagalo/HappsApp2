@@ -1,0 +1,54 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "9cfef81d1c42b7db7bee1acfa213c45c",
+    "entities": [
+      {
+        "tableName": "band",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`bandID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `bandName` TEXT, `genreTags` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "bandID",
+            "columnName": "bandID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "bandName",
+            "columnName": "bandName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "genreTags",
+            "columnName": "genreTags",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "bandID"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_band_bandID",
+            "unique": false,
+            "columnNames": [
+              "bandID"
+            ],
+            "createSql": "CREATE  INDEX `index_band_bandID` ON `${TABLE_NAME}` (`bandID`)"
+          }
+        ],
+        "foreignKeys": []
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"9cfef81d1c42b7db7bee1acfa213c45c\")"
+    ]
+  }
+}

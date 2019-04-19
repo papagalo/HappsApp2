@@ -1,0 +1,66 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "3cd1e8565e12be33a82238186580815d",
+    "entities": [
+      {
+        "tableName": "concerts",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`concertID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT, `location` TEXT, `startTime` TEXT, `endTime` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "concertID",
+            "columnName": "concertID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "location",
+            "columnName": "location",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "startTime",
+            "columnName": "startTime",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "endTime",
+            "columnName": "endTime",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "concertID"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_concerts_concertID",
+            "unique": false,
+            "columnNames": [
+              "concertID"
+            ],
+            "createSql": "CREATE  INDEX `index_concerts_concertID` ON `${TABLE_NAME}` (`concertID`)"
+          }
+        ],
+        "foreignKeys": []
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"3cd1e8565e12be33a82238186580815d\")"
+    ]
+  }
+}
