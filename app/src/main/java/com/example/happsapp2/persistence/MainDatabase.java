@@ -8,7 +8,6 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.example.happsapp2.models.Band;
 import com.example.happsapp2.models.Category;
@@ -29,7 +28,7 @@ import static android.content.ContentValues.TAG;
                       User.class,
                       Following.class,
                       UserFollowers.class,
-                      Category.class}, version  = 2)
+                      Category.class}, version  = 3)
 public abstract class MainDatabase extends RoomDatabase {
     private static final String DATABASE_NAME = "main_database";
 

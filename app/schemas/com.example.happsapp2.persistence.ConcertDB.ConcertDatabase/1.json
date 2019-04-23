@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "2d847d8f76f3a6494704db44c196b029",
+    "identityHash": "f9e3e5d691c153f404842d3c6a455353",
     "entities": [
       {
         "tableName": "concerts",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`concertID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT, `location` TEXT, `startTime` TEXT, `endTime` TEXT, `genre` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`concertID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `band name` TEXT, `location` TEXT, `startTime` TEXT, `endTime` TEXT, `genre` TEXT)",
         "fields": [
           {
             "fieldPath": "concertID",
@@ -15,8 +15,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "title",
-            "columnName": "title",
+            "fieldPath": "bandName",
+            "columnName": "band name",
             "affinity": "TEXT",
             "notNull": false
           },
@@ -66,7 +66,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"2d847d8f76f3a6494704db44c196b029\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"f9e3e5d691c153f404842d3c6a455353\")"
     ]
   }
 }

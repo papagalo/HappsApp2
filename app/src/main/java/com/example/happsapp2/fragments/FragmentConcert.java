@@ -32,11 +32,10 @@ import static android.content.ContentValues.TAG;
 
 public class FragmentConcert extends Fragment {
     static final int ADD_NOTE_REQUEST = 1;
-    private List<Concert> concertList;
+    static final int EDIT_NOTE_REQUEST = 2;
     private RecyclerView recyclerView;
     private ConcertViewModel concertViewModel;
     private ConcertAdapter adapter;
-    private LinearLayoutManager linearLayoutManager;
 
     public FragmentConcert() {
     }
@@ -77,11 +76,15 @@ public class FragmentConcert extends Fragment {
             @Override
             public void onItemClick(Concert concert) {
                 Intent intent = new Intent(getActivity(), AddEditConcertActivity.class);
-                intent.putExtra(AddEditConcertActivity.EXTRA_TITLE, concert.getTitle());
+
+                intent.putExtra(AddEditConcertActivity.EXTRA_BAND_NAME, concert.getBandName());
                 intent.putExtra(AddEditConcertActivity.EXTRA_GENRE, concert.getGenre());
                 intent.putExtra(AddEditConcertActivity.EXTRA_LOCATION, concert.getLocation());
                 intent.putExtra(AddEditConcertActivity.EXTRA_START_TIME, concert.getStartTime());
                 intent.putExtra(AddEditConcertActivity.EXTRA_END_TIME, concert.getEndTime());
+                intent.putExtra(AddEditConcertActivity.EXTRA_ID, concert.getConcertID());
+
+                startActivityForResult(intent, EDIT_NOTE_REQUEST);
             }
         });
 
@@ -93,17 +96,35 @@ public class FragmentConcert extends Fragment {
         super.onActivityResult(requestCode,resultCode,data);
 
         if(requestCode == ADD_NOTE_REQUEST && resultCode == RESULT_OK) {
-            String title = data.getStringExtra(AddEditConcertActivity.EXTRA_TITLE);
+            String bandName = data.getStringExtra(AddEditConcertActivity.EXTRA_BAND_NAME);
             String genre = data.getStringExtra(AddEditConcertActivity.EXTRA_GENRE);
             String location = data.getStringExtra(AddEditConcertActivity.EXTRA_LOCATION);
             String startTime = data.getStringExtra(AddEditConcertActivity.EXTRA_START_TIME);
             String endTime = data.getStringExtra(AddEditConcertActivity.EXTRA_END_TIME);
 
-
-            Concert concert = new Concert(title, location,startTime, endTime, genre);
+            Concert concert = new Concert(bandName, genre , location, startTime, endTime);
             concertViewModel.insert(concert);
 
             Toast.makeText(getActivity(),"Concert Saved", Toast.LENGTH_SHORT).show();
+        } else if(requestCode == EDIT_NOTE_REQUEST && resultCode == RESULT_OK) {
+            int id = data.getIntExtra(AddEditConcertActivity.EXTRA_ID, -1);
+
+            if (id == -1) {
+                Toast.makeText(getActivity(), "Concert can't be updated", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            String bandName = data.getStringExtra(AddEditConcertActivity.EXTRA_BAND_NAME);
+            String genre = data.getStringExtra(AddEditConcertActivity.EXTRA_GENRE);
+            String location = data.getStringExtra(AddEditConcertActivity.EXTRA_LOCATION);
+            String startTime = data.getStringExtra(AddEditConcertActivity.EXTRA_START_TIME);
+            String endTime = data.getStringExtra(AddEditConcertActivity.EXTRA_END_TIME);
+
+            Concert concert = new Concert(bandName, genre, location, startTime, endTime);
+            concert.setConcertID(id);
+            concertViewModel.update(concert);
+            Toast.makeText(getActivity(), "Concert updated", Toast.LENGTH_SHORT).show();
+
         } else {
             Toast.makeText(getActivity(), "Concert Not Saved", Toast.LENGTH_SHORT).show();
         }

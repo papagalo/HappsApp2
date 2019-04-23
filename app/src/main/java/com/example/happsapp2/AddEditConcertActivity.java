@@ -10,8 +10,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class AddEditConcertActivity extends AppCompatActivity {
-    public static final String EXTRA_TITLE =
-            "com.example.happsapp2.EXTRA_TITLE";
+    public static final String EXTRA_BAND_NAME =
+            "com.example.happsapp2.EXTRA_BAND_NAME";
     public static final String EXTRA_GENRE =
             "com.example.happsapp2.EXTRA_GENRE";
     public static final String EXTRA_LOCATION =
@@ -20,6 +20,9 @@ public class AddEditConcertActivity extends AppCompatActivity {
             "com.example.happsapp2.EXTRA_START_TIME";
     public static final String EXTRA_END_TIME =
             "com.example.happsapp2.EXTRA_END_TIME";
+    public static final String EXTRA_ID =
+            "com.example.happsapp2.EXTRA_ID";
+
 
     private EditText editTextBandName;
     private EditText editTextGenre;
@@ -32,35 +35,54 @@ public class AddEditConcertActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_concert);
 
-        editTextGenre = findViewById(R.id.edit_text_genre);
-        editTextBandName = findViewById(R.id.edit_text_band_name);
-        editTextLocation = findViewById(R.id.edit_text_location);
+        editTextBandName  = findViewById(R.id.edit_text_band_name);
+        editTextGenre     = findViewById(R.id.edit_text_genre);
+        editTextLocation  = findViewById(R.id.edit_text_location);
         editTextStartTime = findViewById(R.id.edit_text_start_time);
-        editTextEndTime = findViewById(R.id.edit_text_end_time);
+        editTextEndTime   = findViewById(R.id.edit_text_end_time);
 
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_black_24dp);
-        setTitle("Add Concert");
+
+        Intent intent = getIntent();
+
+        if (intent.hasExtra(EXTRA_ID)) {
+            setTitle("Edit Concert");
+            editTextBandName.setText(intent.getStringExtra(EXTRA_BAND_NAME));
+            editTextGenre.setText(intent.getStringExtra(EXTRA_GENRE));
+            editTextLocation.setText(intent.getStringExtra(EXTRA_LOCATION));
+            editTextStartTime.setText(intent.getStringExtra(EXTRA_START_TIME));
+            editTextEndTime.setText(intent.getStringExtra(EXTRA_END_TIME));
+        } else {
+            setTitle("Add Concert");
+        }
     }
 
     private void saveConcert() {
-        String title = editTextBandName.getText().toString();
+        String bandName = editTextBandName.getText().toString();
         String genre = editTextGenre.getText().toString();
         String location = editTextLocation.getText().toString();
         String startTime = editTextStartTime.getText().toString();
         String endTime = editTextEndTime.getText().toString();
 
-        if (title.trim().isEmpty() || genre.trim().isEmpty()) {
-            Toast.makeText(this, "Please insert fill out all fields", Toast.LENGTH_SHORT).show();
+        if (bandName.trim().isEmpty() || genre.trim().isEmpty() ||
+            location.trim().isEmpty() || startTime.trim().isEmpty() ||
+            endTime.trim().isEmpty()) {
+            Toast.makeText(this, "Please fill out all fields", Toast.LENGTH_SHORT).show();
             return;
         }
 
         Intent data = new Intent();
-        data.putExtra(EXTRA_TITLE, genre);
-        data.putExtra(EXTRA_GENRE, title);
+        data.putExtra(EXTRA_BAND_NAME, bandName);
+        data.putExtra(EXTRA_GENRE, genre);
         data.putExtra(EXTRA_LOCATION, location);
         data.putExtra(EXTRA_START_TIME, startTime);
         data.putExtra(EXTRA_END_TIME, endTime);
+
+        int id = getIntent().getIntExtra(EXTRA_ID, -1);
+        if (id != -1) {
+            data.putExtra(EXTRA_ID, id);
+        }
 
         setResult(RESULT_OK, data);
         finish();

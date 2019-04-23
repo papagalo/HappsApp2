@@ -22,11 +22,7 @@ public class ConcertRecyclerAdapter extends RecyclerView.Adapter<ConcertRecycler
     private List<Concert> gConcerts;
     private OnEventListener gOnEventListener;
     private Context gContext;
-
-    /*public ConcertRecyclerAdapter(ArrayList<Concert> gConcerts, OnEventListener onEventListener) {
-        this.gOnEventListener = onEventListener;
-        this.gConcerts = gConcerts;
-    }*/
+    
 
     @NonNull
     @Override
@@ -38,8 +34,8 @@ public class ConcertRecyclerAdapter extends RecyclerView.Adapter<ConcertRecycler
 
     @Override
     public void onBindViewHolder(@NonNull ConcertHolder holder, int position) {
-        holder.title.setText(gConcerts.get(position).getTitle());
-        holder.genre.setText(gConcerts.get(position).getLocation());
+        holder.title.setText(gConcerts.get(position).getBandName());
+        holder.location.setText(gConcerts.get(position).getLocation());
     }
 
     @Override
@@ -54,14 +50,14 @@ public class ConcertRecyclerAdapter extends RecyclerView.Adapter<ConcertRecycler
 
     public class ConcertHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView title;
-        private TextView genre;
+        private TextView location;
 
         OnEventListener onEventListener;
 
         public ConcertHolder(@NonNull View itemView, OnEventListener onEventListener)  {
             super(itemView);
-            title = itemView.findViewById(R.id.text_view_concert_name);
-            genre = itemView.findViewById(R.id.text_view_concert_genre);
+            title = itemView.findViewById(R.id.text_view_band_name);
+            location= itemView.findViewById(R.id.text_view_location);
             this.onEventListener = onEventListener;
 
             itemView.setOnClickListener(this);
@@ -69,7 +65,7 @@ public class ConcertRecyclerAdapter extends RecyclerView.Adapter<ConcertRecycler
 
         public void bindView(int position) {
             title.setText("hello");
-            genre.setText("test");
+            location.setText("test");
         }
 
         @Override

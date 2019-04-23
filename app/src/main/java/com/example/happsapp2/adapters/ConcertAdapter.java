@@ -30,8 +30,8 @@ public class ConcertAdapter extends RecyclerView.Adapter<ConcertAdapter.ConcertH
     @Override
     public void onBindViewHolder(@NonNull ConcertHolder concertHolder, int position) {
         Concert currentConcert = concerts.get(position);
-        concertHolder.textViewTitle.setText(currentConcert.getTitle());
-        concertHolder.textViewGenre.setText(currentConcert.getLocation());
+        concertHolder.textViewBandName.setText(currentConcert.getBandName());
+        concertHolder.textViewLocation.setText(currentConcert.getLocation());
         concertHolder.textViewConcertID.setText(String.valueOf(currentConcert.getConcertID()));
     }
 
@@ -50,15 +50,15 @@ public class ConcertAdapter extends RecyclerView.Adapter<ConcertAdapter.ConcertH
     }
 
     class ConcertHolder extends RecyclerView.ViewHolder {
-        private TextView textViewTitle;
-        private TextView textViewGenre;
+        private TextView textViewBandName;
+        private TextView textViewLocation;
         private TextView textViewConcertID;
 
 
         public ConcertHolder(View itemView) {
             super(itemView);
-            textViewTitle = itemView.findViewById(R.id.text_view_concert_name);
-            textViewGenre = itemView.findViewById(R.id.text_view_concert_genre);
+            textViewBandName = itemView.findViewById(R.id.text_view_band_name);
+            textViewLocation = itemView.findViewById(R.id.text_view_location);
             textViewConcertID = itemView.findViewById(R.id.text_view_concertID);
 
 

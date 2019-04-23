@@ -15,8 +15,8 @@ public class Concert implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     private int concertID;
 
-    @ColumnInfo(name = "title")
-    private String title;
+    @ColumnInfo(name = "band name")
+    private String bandName;
 
     @ColumnInfo(name = "location")
     private String location;
@@ -30,23 +30,23 @@ public class Concert implements Parcelable {
     @ColumnInfo(name = "genre")
     private String genre;
 
-    public Concert(String title, String location, String startTime,
-                   String endTime, String genre) {
-        this.title = title;
+    public Concert(String bandName,String genre, String location,
+                   String startTime, String endTime) {
+        this.bandName = bandName;
+        this.genre = genre;
         this.location = location;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.genre = genre;
         //this.concertID = concertID;
     }
 
     protected Concert(Parcel in) {
-        title = in.readString();
+        bandName = in.readString();
+        genre = in.readString();
         location = in.readString();
         startTime = in.readString();
         endTime = in.readString();
-        concertID = in.readInt();
-        genre = in.readString();
+        //concertID = in.readInt();
     }
 
     public static final Creator<Concert> CREATOR = new Creator<Concert>() {
@@ -61,10 +61,10 @@ public class Concert implements Parcelable {
         }
     };
 
-    public String getTitle() { return title; }
+    public String getBandName() { return bandName; }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setBandName(String bandName) {
+        this.bandName = bandName;
     }
 
     public String getLocation() {
@@ -100,12 +100,12 @@ public class Concert implements Parcelable {
     @Override
     public String toString() {
         return "Concert{" +
-                //"concertID='" + concertID + '\'' +
-                ", title='" + title + '\'' +
+                "concertID='" + concertID + '\'' +
+                ", bandName='" + bandName + '\'' +
+                ", genre='" + genre + '\'' +
                 ", location='" + location + '\'' +
                 ", startTime='" + startTime + '\'' +
                 ", endTime='" + endTime + '\'' +
-                ", genre='" + genre + '\'' +
                 '}';
     }
 
@@ -116,11 +116,11 @@ public class Concert implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(title);
+        dest.writeString(bandName);
+        dest.writeString(genre);
         dest.writeString(location);
         dest.writeString(startTime);
         dest.writeString(endTime);
-        dest.writeInt(concertID);
-        dest.writeString(genre);
+        //dest.writeInt(concertID);
     }
 }
