@@ -27,12 +27,16 @@ public class Concert implements Parcelable {
     @ColumnInfo(name = "endTime")
     private String endTime;
 
+    @ColumnInfo(name = "genre")
+    private String genre;
+
     public Concert(String title, String location, String startTime,
-                   String endTime) {
+                   String endTime, String genre) {
         this.title = title;
         this.location = location;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.genre = genre;
         //this.concertID = concertID;
     }
 
@@ -42,6 +46,7 @@ public class Concert implements Parcelable {
         startTime = in.readString();
         endTime = in.readString();
         concertID = in.readInt();
+        genre = in.readString();
     }
 
     public static final Creator<Concert> CREATOR = new Creator<Concert>() {
@@ -88,6 +93,10 @@ public class Concert implements Parcelable {
 
     public void setConcertID(int concertID) { this.concertID = concertID;   }
 
+    public String getGenre() { return genre; }
+
+    public void setGenre(String genre) { this.genre = genre; }
+
     @Override
     public String toString() {
         return "Concert{" +
@@ -96,6 +105,7 @@ public class Concert implements Parcelable {
                 ", location='" + location + '\'' +
                 ", startTime='" + startTime + '\'' +
                 ", endTime='" + endTime + '\'' +
+                ", genre='" + genre + '\'' +
                 '}';
     }
 
@@ -111,5 +121,6 @@ public class Concert implements Parcelable {
         dest.writeString(startTime);
         dest.writeString(endTime);
         dest.writeInt(concertID);
+        dest.writeString(genre);
     }
 }

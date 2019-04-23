@@ -12,19 +12,19 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.happsapp2.AddConcertActivity;
-import com.example.happsapp2.HomeScreenActivity;
+import com.example.happsapp2.AddEditConcertActivity;
 import com.example.happsapp2.R;
 import com.example.happsapp2.adapters.ConcertAdapter;
-import com.example.happsapp2.adapters.ConcertRecyclerAdapter;
 import com.example.happsapp2.models.Concert;
 import com.example.happsapp2.view_models.ConcertViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
@@ -45,7 +45,7 @@ public class FragmentConcert extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-
+        setHasOptionsMenu(true);
         View v = inflater.inflate(R.layout.concert_fragment,container,false  );
 
         recyclerView = v.findViewById(R.id.concert_recycler_view);
@@ -56,7 +56,7 @@ public class FragmentConcert extends Fragment {
         buttonAddConcert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), AddConcertActivity.class);
+                Intent intent = new Intent(getActivity(), AddEditConcertActivity.class);
                 startActivityForResult(intent, ADD_NOTE_REQUEST);
             }
         });
@@ -73,32 +73,19 @@ public class FragmentConcert extends Fragment {
             }
         });
 
-
-        return v;
-
-
-        /*//recyclerView = v.findViewById(R.id.concert_recycler_view);
-        ConcertRecyclerAdapter recyclerAdapter = new ConcertRecyclerAdapter();
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(recyclerAdapter);
-        //final LinearLayoutManager linearLayoutManager = new LinearLayoutManager();
-
-        //linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        RecyclerView concertRecyclerView = v.findViewById(R.id.concert_recycler_view);
-        //concertRecyclerView.setLayoutManager(linearLayoutManager);
-        concertRecyclerView.setHasFixedSize(true);
-
-        final ConcertRecyclerAdapter concertAdapter = new ConcertRecyclerAdapter();
-        gConcertViewModel = ViewModelProviders.of(this).get(ConcertViewModel.class);
-        gConcertViewModel.getAllConcerts().observe(this, new Observer<List<Concert>>() {
+        adapter.setOnItemClickListener(new ConcertAdapter.OnItemClickListener() {
             @Override
-            public void onChanged(@Nullable List<Concert> concerts) {
-                concertAdapter.setConcerts(concerts);
+            public void onItemClick(Concert concert) {
+                Intent intent = new Intent(getActivity(), AddEditConcertActivity.class);
+                intent.putExtra(AddEditConcertActivity.EXTRA_TITLE, concert.getTitle());
+                intent.putExtra(AddEditConcertActivity.EXTRA_GENRE, concert.getGenre());
+                intent.putExtra(AddEditConcertActivity.EXTRA_LOCATION, concert.getLocation());
+                intent.putExtra(AddEditConcertActivity.EXTRA_START_TIME, concert.getStartTime());
+                intent.putExtra(AddEditConcertActivity.EXTRA_END_TIME, concert.getEndTime());
             }
         });
-        concertRecyclerView.setAdapter(concertAdapter);*/
 
-
+        return v;
     }
 
     @Override
@@ -106,10 +93,14 @@ public class FragmentConcert extends Fragment {
         super.onActivityResult(requestCode,resultCode,data);
 
         if(requestCode == ADD_NOTE_REQUEST && resultCode == RESULT_OK) {
-            String title = data.getStringExtra(AddConcertActivity.EXTRA_TITLE);
-            String genre = data.getStringExtra(AddConcertActivity.EXTRA_GENRE);
+            String title = data.getStringExtra(AddEditConcertActivity.EXTRA_TITLE);
+            String genre = data.getStringExtra(AddEditConcertActivity.EXTRA_GENRE);
+            String location = data.getStringExtra(AddEditConcertActivity.EXTRA_LOCATION);
+            String startTime = data.getStringExtra(AddEditConcertActivity.EXTRA_START_TIME);
+            String endTime = data.getStringExtra(AddEditConcertActivity.EXTRA_END_TIME);
 
-            Concert concert = new Concert(title, genre,"9:00 pm", "12:00 am");
+
+            Concert concert = new Concert(title, location,startTime, endTime, genre);
             concertViewModel.insert(concert);
 
             Toast.makeText(getActivity(),"Concert Saved", Toast.LENGTH_SHORT).show();
@@ -117,12 +108,25 @@ public class FragmentConcert extends Fragment {
             Toast.makeText(getActivity(), "Concert Not Saved", Toast.LENGTH_SHORT).show();
         }
     }
-    /*@Override
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.main_menu, menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.delete_all_events:
+                concertViewModel.deleteAllConcerts();
+                Toast.makeText(getActivity(),"All Concerts Deleted", Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+   /* @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        concertList = new ArrayList<>();
-        concertList.add(new Concert("The Fritz", "Murphy's",
-                "7:00 pm", "9:00 pm"));
+        setHasOptionsMenu(true);
     }*/
 }

@@ -35,4 +35,6 @@ public class ConcertViewModel extends AndroidViewModel {
     public LiveData<List<Concert>> getAllConcerts() {
         return allConcerts;
     }
+
+    public void deleteAllConcerts() { repository.deleteAllConcerts(); }
 }

@@ -23,6 +23,9 @@ public interface ConcertDao {
     @Query("SELECT * FROM concerts WHERE concertID = :concert_id;")
     List<Concert> getConcertWithCustomQuery(int concert_id);
 
+    @Query("DELETE FROM concerts")
+    void deleteAllConcerts();
+
     @Delete
     int delete(Concert concert);
 

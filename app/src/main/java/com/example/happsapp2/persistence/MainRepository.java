@@ -2,7 +2,6 @@ package com.example.happsapp2.persistence;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
-import android.content.Context;
 import android.os.AsyncTask;
 
 import com.example.happsapp2.async.InsertAsyncTask;
@@ -66,6 +65,10 @@ public class MainRepository {
         return allConcerts;
     }
 
+    public void deleteAllConcerts() {
+        new DeleteAllConcertAsyncTask(concertDao).execute();
+    }
+
     private static class InsertConcertAsyncTask extends AsyncTask<Concert, Void, Void> {
         private ConcertDao concertDao;
 
@@ -104,6 +107,18 @@ public class MainRepository {
         @Override
         protected Void doInBackground(Concert... concerts) {
             concertDao.delete(concerts[0]);
+            return null;
+        }
+    }
+
+    private static class DeleteAllConcertAsyncTask extends AsyncTask<Void, Void, Void> {
+        private ConcertDao concertDao;
+
+        public DeleteAllConcertAsyncTask(ConcertDao concertDao) { this.concertDao = concertDao;  }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            concertDao.deleteAllConcerts();
             return null;
         }
     }
@@ -161,6 +176,7 @@ public class MainRepository {
             return null;
         }
     }
+
 
 
 }

@@ -29,7 +29,7 @@ import static android.content.ContentValues.TAG;
                       User.class,
                       Following.class,
                       UserFollowers.class,
-                      Category.class}, version  = 1)
+                      Category.class}, version  = 2)
 public abstract class MainDatabase extends RoomDatabase {
     private static final String DATABASE_NAME = "main_database";
 
@@ -70,22 +70,6 @@ public abstract class MainDatabase extends RoomDatabase {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            concertDao.insertConcert(new Concert("The Fritz", "Boone Saloon",
-                    "7:00 pm", "12:00 am"));
-            concertDao.insertConcert(new Concert("The Mantras", "Tapp Room",
-                    "9:00 pm", "1:00 am"));
-            concertDao.insertConcert(new Concert("Big Something", "The Local",
-                    "8:00 pm", "2:00 am"));
-            concertDao.insertConcert(new Concert("The Who", "Convocation Center",
-                    "8:00 pm", "2:00 am"));
-            concertDao.insertConcert(new Concert("Funkelstiltskin", "The Local",
-                    "8:00 pm", "2:00 am"));
-            concertDao.insertConcert(new Concert("Pigeons Playing Ping Pong", "The Local",
-                    "10:00 pm", "2:00 am"));
-            concertDao.insertConcert(new Concert("ZOSO", "Legends",
-                    "5:00 pm", "2:00 am"));
-            concertDao.insertConcert(new Concert("Rebelution", "Galileo's",
-                    "8:00 pm", "2:00 am"));
             Log.d(TAG, "doInBackground: DOINBACKGROUND");
             return null;
         }

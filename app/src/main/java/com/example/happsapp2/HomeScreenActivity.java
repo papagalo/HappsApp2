@@ -4,16 +4,13 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
 
-import com.example.happsapp2.adapters.ConcertAdapter;
+
 import com.example.happsapp2.adapters.ViewPagerAdapter;
 import com.example.happsapp2.fragments.FragmentBoardGame;
 import com.example.happsapp2.fragments.FragmentConcert;
@@ -37,13 +34,7 @@ public class HomeScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_main_activity);
 
-        /*RecyclerView recyclerView = findViewById(R.id.concert_recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setHasFixedSize(true);
-*/
-        /*ConcertAdapter adapter = new ConcertAdapter();
-        recyclerView.setAdapter(adapter);*/
-        //final ConcertRecyclerAdapter concertAdapter = new ConcertRecyclerAdapter();
+
         gConcertViewModel = ViewModelProviders.of(this).get(ConcertViewModel.class);
         gConcertViewModel.getAllConcerts().observe(this, new Observer<List<Concert>>() {
             @Override
@@ -53,13 +44,6 @@ public class HomeScreenActivity extends AppCompatActivity {
                 //This is where the RecyclerView will be updated
             }
         });
-
-
-
-
-
-
-
 
         gTabLayout = findViewById(R.id.tabLayout_id);
         gViewPager = findViewById(R.id.viewPager_id);
@@ -73,11 +57,5 @@ public class HomeScreenActivity extends AppCompatActivity {
         gViewPager.setAdapter(gViewPagerAdapter);
         gTabLayout.setupWithViewPager(gViewPager);
 
-
-        /*FragmentConcert concertFragment = new FragmentConcert();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.new_main_act, concertFragment);
-        fragmentTransaction.commit();*/
     }
 }

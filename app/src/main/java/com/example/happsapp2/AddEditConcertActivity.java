@@ -9,14 +9,23 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class AddConcertActivity extends AppCompatActivity {
+public class AddEditConcertActivity extends AppCompatActivity {
     public static final String EXTRA_TITLE =
             "com.example.happsapp2.EXTRA_TITLE";
     public static final String EXTRA_GENRE =
             "com.example.happsapp2.EXTRA_GENRE";
+    public static final String EXTRA_LOCATION =
+            "com.example.happsapp2.EXTRA_LOCATION";
+    public static final String EXTRA_START_TIME =
+            "com.example.happsapp2.EXTRA_START_TIME";
+    public static final String EXTRA_END_TIME =
+            "com.example.happsapp2.EXTRA_END_TIME";
 
-    private EditText editTextTitle;
+    private EditText editTextBandName;
     private EditText editTextGenre;
+    private EditText editTextLocation;
+    private EditText editTextStartTime;
+    private EditText editTextEndTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,25 +33,34 @@ public class AddConcertActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_concert);
 
         editTextGenre = findViewById(R.id.edit_text_genre);
-        editTextTitle = findViewById(R.id.edit_text_title);
+        editTextBandName = findViewById(R.id.edit_text_band_name);
+        editTextLocation = findViewById(R.id.edit_text_location);
+        editTextStartTime = findViewById(R.id.edit_text_start_time);
+        editTextEndTime = findViewById(R.id.edit_text_end_time);
+
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_black_24dp);
         setTitle("Add Concert");
     }
 
     private void saveConcert() {
-        String title = editTextTitle.getText().toString();
+        String title = editTextBandName.getText().toString();
         String genre = editTextGenre.getText().toString();
+        String location = editTextLocation.getText().toString();
+        String startTime = editTextStartTime.getText().toString();
+        String endTime = editTextEndTime.getText().toString();
 
         if (title.trim().isEmpty() || genre.trim().isEmpty()) {
-            Toast.makeText(this, "Please insert a Title and A Genre", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please insert fill out all fields", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        Toast.makeText(this, "This is taking input", Toast.LENGTH_SHORT).show();
         Intent data = new Intent();
         data.putExtra(EXTRA_TITLE, genre);
         data.putExtra(EXTRA_GENRE, title);
+        data.putExtra(EXTRA_LOCATION, location);
+        data.putExtra(EXTRA_START_TIME, startTime);
+        data.putExtra(EXTRA_END_TIME, endTime);
 
         setResult(RESULT_OK, data);
         finish();

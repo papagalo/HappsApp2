@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "6b24473d0ba9866e80d7cda1df4047d1",
+    "identityHash": "5c134bae6e3a0b4a3d9cd47effaf331f",
     "entities": [
       {
         "tableName": "band",
@@ -47,7 +47,7 @@
       },
       {
         "tableName": "concerts",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`concertID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT, `location` TEXT, `startTime` TEXT, `endTime` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`concertID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT, `location` TEXT, `startTime` TEXT, `endTime` TEXT, `genre` TEXT)",
         "fields": [
           {
             "fieldPath": "concertID",
@@ -76,6 +76,12 @@
           {
             "fieldPath": "endTime",
             "columnName": "endTime",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "genre",
+            "columnName": "genre",
             "affinity": "TEXT",
             "notNull": false
           }
@@ -387,7 +393,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"6b24473d0ba9866e80d7cda1df4047d1\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"5c134bae6e3a0b4a3d9cd47effaf331f\")"
     ]
   }
 }

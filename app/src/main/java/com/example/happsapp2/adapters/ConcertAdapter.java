@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.example.happsapp2.R;
@@ -16,6 +17,7 @@ import java.util.List;
 public class ConcertAdapter extends RecyclerView.Adapter<ConcertAdapter.ConcertHolder> {
 
     private List<Concert> concerts = new ArrayList<>();
+    private OnItemClickListener listener;
 
     @NonNull
     @Override
@@ -30,6 +32,7 @@ public class ConcertAdapter extends RecyclerView.Adapter<ConcertAdapter.ConcertH
         Concert currentConcert = concerts.get(position);
         concertHolder.textViewTitle.setText(currentConcert.getTitle());
         concertHolder.textViewGenre.setText(currentConcert.getLocation());
+        concertHolder.textViewConcertID.setText(String.valueOf(currentConcert.getConcertID()));
     }
 
     @Override
@@ -42,17 +45,41 @@ public class ConcertAdapter extends RecyclerView.Adapter<ConcertAdapter.ConcertH
         notifyDataSetChanged();
     }
 
+    public Concert getConcertAt(int position) {
+        return concerts.get(position);
+    }
+
     class ConcertHolder extends RecyclerView.ViewHolder {
         private TextView textViewTitle;
         private TextView textViewGenre;
+        private TextView textViewConcertID;
 
 
         public ConcertHolder(View itemView) {
             super(itemView);
             textViewTitle = itemView.findViewById(R.id.text_view_concert_name);
             textViewGenre = itemView.findViewById(R.id.text_view_concert_genre);
+            textViewConcertID = itemView.findViewById(R.id.text_view_concertID);
 
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (listener != null && position != RecyclerView.NO_POSITION) {
+                        listener.onItemClick(concerts.get(position));
+                    }
+                }
+            });
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(Concert concert);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
     }
 
 }
