@@ -7,6 +7,8 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.example.happsapp2.models.Band;
 import com.example.happsapp2.models.Category;
@@ -19,6 +21,8 @@ import com.example.happsapp2.persistence.BandDB.BandDao;
 import com.example.happsapp2.persistence.CategoryDB.CategoryDao;
 import com.example.happsapp2.persistence.ConcertDB.ConcertDao;
 
+import static android.content.ContentValues.TAG;
+
 @Database(entities = {Band.class,
                       Concert.class,
                       Places.class,
@@ -27,12 +31,13 @@ import com.example.happsapp2.persistence.ConcertDB.ConcertDao;
                       UserFollowers.class,
                       Category.class}, version  = 1)
 public abstract class MainDatabase extends RoomDatabase {
-    public static final String DATABASE_NAME = "main_database";
+    private static final String DATABASE_NAME = "main_database";
 
     private static MainDatabase instance;
 
     public static synchronized MainDatabase getInstance(final Context context) {
         if (instance == null) {
+            Log.d(TAG, "getInstance: NULL");
             instance = Room.databaseBuilder(
                     context.getApplicationContext(),
                     MainDatabase.class,
@@ -41,6 +46,7 @@ public abstract class MainDatabase extends RoomDatabase {
                     .addCallback(roomCallback)
                     .build();
         }
+        Log.d(TAG, "getInstance: NOT NULL");
         return instance;
     }
 
@@ -55,9 +61,11 @@ public abstract class MainDatabase extends RoomDatabase {
 
     private static class PopulateConcertDbAsyncTask extends AsyncTask<Void, Void, Void> {
         private ConcertDao concertDao;
+        private static final String TAG = "PopulateConcertDbAsyncT";
 
         private PopulateConcertDbAsyncTask(MainDatabase db) {
             concertDao = db.getConcertDAO();
+            Log.d(TAG, "PopulateConcertDbAsyncTask: GETDAO");
         }
 
         @Override
@@ -78,6 +86,7 @@ public abstract class MainDatabase extends RoomDatabase {
                     "5:00 pm", "2:00 am"));
             concertDao.insertConcert(new Concert("Rebelution", "Galileo's",
                     "8:00 pm", "2:00 am"));
+            Log.d(TAG, "doInBackground: DOINBACKGROUND");
             return null;
         }
     }

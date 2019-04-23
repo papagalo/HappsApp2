@@ -27,9 +27,9 @@ public class ConcertAdapter extends RecyclerView.Adapter<ConcertAdapter.ConcertH
 
     @Override
     public void onBindViewHolder(@NonNull ConcertHolder concertHolder, int position) {
-        Concert selectedConcert = concerts.get(position);
-        concertHolder.textViewTitle.setText(selectedConcert.getTitle());
-        concertHolder.textViewGenre.setText(selectedConcert.getLocation());
+        Concert currentConcert = concerts.get(position);
+        concertHolder.textViewTitle.setText(currentConcert.getTitle());
+        concertHolder.textViewGenre.setText(currentConcert.getLocation());
     }
 
     @Override

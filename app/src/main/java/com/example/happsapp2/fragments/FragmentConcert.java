@@ -10,6 +10,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
+import static android.content.ContentValues.TAG;
 
 public class FragmentConcert extends Fragment {
     static final int ADD_NOTE_REQUEST = 1;
@@ -54,7 +56,7 @@ public class FragmentConcert extends Fragment {
         buttonAddConcert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(String.valueOf(getActivity()));
+                Intent intent = new Intent(getActivity(), AddConcertActivity.class);
                 startActivityForResult(intent, ADD_NOTE_REQUEST);
             }
         });
@@ -62,10 +64,11 @@ public class FragmentConcert extends Fragment {
         adapter = new ConcertAdapter();
         recyclerView.setAdapter(adapter);
 
-        concertViewModel = ViewModelProviders.of(getActivity()).get(ConcertViewModel.class);
-        concertViewModel.getAllConcerts().observe(getActivity(), new Observer<List<Concert>>() {
+        concertViewModel = ViewModelProviders.of(this).get(ConcertViewModel.class);
+        concertViewModel.getAllConcerts().observe(this, new Observer<List<Concert>>() {
             @Override
             public void onChanged(@Nullable List<Concert> concerts) {
+                Log.d(TAG, "onChanged: FRAGMENT");
                 adapter.setConcerts(concerts);
             }
         });
@@ -104,7 +107,7 @@ public class FragmentConcert extends Fragment {
 
         if(requestCode == ADD_NOTE_REQUEST && resultCode == RESULT_OK) {
             String title = data.getStringExtra(AddConcertActivity.EXTRA_TITLE);
-            String genre = data.getStringExtra(AddConcertActivity.EXTRA_COMPONENT_NAME);
+            String genre = data.getStringExtra(AddConcertActivity.EXTRA_TITLE);
 
             Concert concert = new Concert(title, genre,"9:00 pm", "12:00 am");
             concertViewModel.insert(concert);

@@ -12,8 +12,8 @@ import android.widget.Toast;
 public class AddConcertActivity extends AppCompatActivity {
     public static final String EXTRA_TITLE =
             "com.example.happsapp2.EXTRA_TITLE";
-    public static final String EXTRA_COMPONENT_NAME =
-            "com.example.happsapp2.EXTRA_DESCRIPTION";
+    public static final String EXTRA_TITLE2 =
+            "com.example.happsapp2.EXTRA_TITLE2";
 
     private EditText editTextTitle;
     private EditText editTextGenre;
@@ -26,7 +26,7 @@ public class AddConcertActivity extends AppCompatActivity {
         editTextGenre = findViewById(R.id.edit_text_genre);
         editTextTitle = findViewById(R.id.edit_text_title);
 
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_black_24dp);
+        //getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_black_24dp);
         setTitle("Add Concert");
     }
 
@@ -40,7 +40,7 @@ public class AddConcertActivity extends AppCompatActivity {
         }
 
         Intent data = new Intent();
-        data.putExtra(Intent.EXTRA_COMPONENT_NAME, genre);
+        data.putExtra(Intent.EXTRA_TITLE, genre);
         data.putExtra(Intent.EXTRA_TITLE, title);
 
         setResult(RESULT_OK, data);
