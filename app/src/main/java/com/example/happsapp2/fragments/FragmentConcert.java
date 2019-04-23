@@ -68,7 +68,7 @@ public class FragmentConcert extends Fragment {
             @Override
             public void onChanged(@Nullable List<Concert> concerts) {
                 Log.d(TAG, "onChanged: FRAGMENT");
-                adapter.setConcerts(concerts);
+                adapter.submitList(concerts);
             }
         });
 
