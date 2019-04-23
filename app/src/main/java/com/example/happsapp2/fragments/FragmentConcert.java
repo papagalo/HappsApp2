@@ -107,7 +107,7 @@ public class FragmentConcert extends Fragment {
 
         if(requestCode == ADD_NOTE_REQUEST && resultCode == RESULT_OK) {
             String title = data.getStringExtra(AddConcertActivity.EXTRA_TITLE);
-            String genre = data.getStringExtra(AddConcertActivity.EXTRA_TITLE);
+            String genre = data.getStringExtra(AddConcertActivity.EXTRA_GENRE);
 
             Concert concert = new Concert(title, genre,"9:00 pm", "12:00 am");
             concertViewModel.insert(concert);

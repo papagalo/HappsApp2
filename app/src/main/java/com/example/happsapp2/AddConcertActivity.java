@@ -12,8 +12,8 @@ import android.widget.Toast;
 public class AddConcertActivity extends AppCompatActivity {
     public static final String EXTRA_TITLE =
             "com.example.happsapp2.EXTRA_TITLE";
-    public static final String EXTRA_TITLE2 =
-            "com.example.happsapp2.EXTRA_TITLE2";
+    public static final String EXTRA_GENRE =
+            "com.example.happsapp2.EXTRA_GENRE";
 
     private EditText editTextTitle;
     private EditText editTextGenre;
@@ -26,7 +26,7 @@ public class AddConcertActivity extends AppCompatActivity {
         editTextGenre = findViewById(R.id.edit_text_genre);
         editTextTitle = findViewById(R.id.edit_text_title);
 
-        //getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_black_24dp);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_black_24dp);
         setTitle("Add Concert");
     }
 
@@ -34,28 +34,31 @@ public class AddConcertActivity extends AppCompatActivity {
         String title = editTextTitle.getText().toString();
         String genre = editTextGenre.getText().toString();
 
-        if(title.trim().isEmpty() || genre.trim().isEmpty()) {
+        if (title.trim().isEmpty() || genre.trim().isEmpty()) {
             Toast.makeText(this, "Please insert a Title and A Genre", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        Toast.makeText(this, "This is taking input", Toast.LENGTH_SHORT).show();
         Intent data = new Intent();
-        data.putExtra(Intent.EXTRA_TITLE, genre);
-        data.putExtra(Intent.EXTRA_TITLE, title);
+        data.putExtra(EXTRA_TITLE, genre);
+        data.putExtra(EXTRA_GENRE, title);
 
         setResult(RESULT_OK, data);
         finish();
     }
 
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.add_event_menu, menu);
         return true;
     }
 
-    public boolean onCreateOptionsMenu(MenuItem item) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.save_concert:
+            case R.id.save_concert_menu:
                 saveConcert();
                 return true;
             default:
