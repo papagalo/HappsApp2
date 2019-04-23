@@ -22,7 +22,7 @@ public class ConcertRecyclerAdapter extends RecyclerView.Adapter<ConcertRecycler
     private List<Concert> gConcerts;
     private OnEventListener gOnEventListener;
     private Context gContext;
-    
+
 
     @NonNull
     @Override
