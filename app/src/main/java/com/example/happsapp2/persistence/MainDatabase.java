@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.example.happsapp2.models.Band;
+import com.example.happsapp2.models.BoardGame;
 import com.example.happsapp2.models.Category;
 import com.example.happsapp2.models.Concert;
 import com.example.happsapp2.models.Following;
@@ -18,6 +19,7 @@ import com.example.happsapp2.models.User;
 import com.example.happsapp2.models.UserFollowers;
 import com.example.happsapp2.models.VideoGame;
 import com.example.happsapp2.persistence.BandDB.BandDao;
+import com.example.happsapp2.persistence.BoardGameDB.BoardGameDao;
 import com.example.happsapp2.persistence.CategoryDB.CategoryDao;
 import com.example.happsapp2.persistence.ConcertDB.ConcertDao;
 import com.example.happsapp2.persistence.VideoGameDB.VideoGameDao;
@@ -25,13 +27,14 @@ import com.example.happsapp2.persistence.VideoGameDB.VideoGameDao;
 import static android.content.ContentValues.TAG;
 
 @Database(entities = {Band.class,
+                      BoardGame.class,
                       Concert.class,
                       Places.class,
                       User.class,
                       Following.class,
                       UserFollowers.class,
                       Category.class,
-                      VideoGame.class}, version  = 5)
+                      VideoGame.class}, version  = 6)
 public abstract class MainDatabase extends RoomDatabase {
     private static final String DATABASE_NAME = "main_database";
 
@@ -59,6 +62,7 @@ public abstract class MainDatabase extends RoomDatabase {
             new PopulateConcertDbAsyncTask(instance).execute();
             new PopulateBandDbAsyncTask(instance).execute();
             new PopulateVideoGameDbAsyncTask(instance).execute();
+            new PopulateBoardGameDbAsyncTask(instance).execute();
         }
     };
 
@@ -98,6 +102,26 @@ public abstract class MainDatabase extends RoomDatabase {
         }
     }
 
+    private static class PopulateBoardGameDbAsyncTask extends AsyncTask<Void, Void, Void> {
+        private BoardGameDao boardGameDao;
+        private static final String TAG = "PopulateBoardGameDbAsyn";
+
+        private PopulateBoardGameDbAsyncTask(MainDatabase db) {
+            boardGameDao = db.getBoardGameDAO();
+            boardGameDao.insertBoardGame(new BoardGame("The Fritz", "My House",
+                    "5:00 pm", "9:00 pm"));
+            Log.d(TAG, "PopulateVideoGameDbAsyncTask: GETDAO");
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            Log.d(TAG, "doInBackground: DOINBACKGROUND");
+            /*BoardGameDao.insertBoardGame(new BoardGame("The Fritz", "My House",
+                    "5:00 pm", "9:00 pm"));*/
+            return null;
+        }
+    }
+
     private static class PopulateBandDbAsyncTask extends AsyncTask<Void, Void, Void> {
         private BandDao bandDao;
 
@@ -118,5 +142,6 @@ public abstract class MainDatabase extends RoomDatabase {
     public abstract ConcertDao getConcertDAO();
     public abstract CategoryDao getCategoryDAO();
     public abstract VideoGameDao getVideoGameDAO();
+    public abstract BoardGameDao getBoardGameDAO();
 
 }

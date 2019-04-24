@@ -6,9 +6,11 @@ import android.os.AsyncTask;
 import android.provider.MediaStore;
 
 import com.example.happsapp2.async.InsertAsyncTask;
+import com.example.happsapp2.models.BoardGame;
 import com.example.happsapp2.models.VideoGame;
 import com.example.happsapp2.models.Category;
 import com.example.happsapp2.models.Concert;
+import com.example.happsapp2.persistence.BoardGameDB.BoardGameDao;
 import com.example.happsapp2.persistence.VideoGameDB.VideoGameDao;
 import com.example.happsapp2.persistence.ConcertDB.ConcertDao;
 
@@ -19,14 +21,17 @@ public class MainRepository {
     private MainDatabase gMainDatabase;
     private ConcertDao concertDao;
     private LiveData<List<Concert>> allConcerts;
-    private LiveData<List<VideoGame>> allVideoGames;
     private VideoGameDao videoGameDao;
-
+    private LiveData<List<VideoGame>> allVideoGames;
+    private BoardGameDao boardGameDao;
+    private LiveData<List<BoardGame>> allBoardGames;
 
     public MainRepository(Application application) {
         gMainDatabase = MainDatabase.getInstance(application);
         concertDao = gMainDatabase.getConcertDAO();
         videoGameDao = gMainDatabase.getVideoGameDAO();
+        boardGameDao = gMainDatabase.getBoardGameDAO();
+        allBoardGames = boardGameDao.getAllBoardGames();
         allConcerts = concertDao.getAllConcerts();
         allVideoGames = videoGameDao.getAllVideoGames();
     }
@@ -198,6 +203,82 @@ public class MainRepository {
         @Override
         protected Void doInBackground(Void... voids) {
             videoGameDao.deleteAllVideoGames();
+            return null;
+        }
+    }
+
+    //BoardGames
+
+    public void insertBoardGameTask(BoardGame boardGame) {
+        new InsertBoardGameAsyncTask(boardGameDao).execute(boardGame);
+    }
+
+    public void updateBoardGame(BoardGame boardGame) {
+        new UpdateBoardGameAsyncTask(boardGameDao).execute(boardGame);
+    }
+
+    public void deleteBoardGame(BoardGame boardGame) {
+        new DeleteBoardGameAsyncTask(boardGameDao).execute(boardGame);
+    }
+
+    public LiveData<List<BoardGame>> getAllBoardGames() {
+        return allBoardGames;
+    }
+
+    public void deleteAllBoardGames() {
+        new DeleteAllBoardGamesAsyncTask(boardGameDao).execute();
+    }
+
+    private static class InsertBoardGameAsyncTask extends AsyncTask<BoardGame, Void, Void> {
+        private BoardGameDao boardGameDao;
+
+        private InsertBoardGameAsyncTask(BoardGameDao boardGameDao) {
+            this.boardGameDao = boardGameDao;
+        }
+
+        @Override
+        protected Void doInBackground(BoardGame... boardGames) {
+            boardGameDao.insertBoardGame(boardGames[0]);
+            return null;
+        }
+    }
+
+    private static class UpdateBoardGameAsyncTask extends AsyncTask<BoardGame, Void, Void> {
+        private BoardGameDao boardGameDao;
+
+        private UpdateBoardGameAsyncTask(BoardGameDao boardGameDao) {
+            this.boardGameDao = boardGameDao;
+        }
+
+        @Override
+        protected Void doInBackground(BoardGame... boardGames) {
+            boardGameDao.update(boardGames[0]);
+            return null;
+        }
+    }
+
+    private static class DeleteBoardGameAsyncTask extends AsyncTask<BoardGame, Void, Void> {
+        private BoardGameDao boardGameDao;
+
+        private DeleteBoardGameAsyncTask(BoardGameDao boardGameDao) {
+            this.boardGameDao = boardGameDao;
+        }
+
+        @Override
+        protected Void doInBackground(BoardGame... boardGames) {
+            boardGameDao.delete(boardGames[0]);
+            return null;
+        }
+    }
+
+    private static class DeleteAllBoardGamesAsyncTask extends AsyncTask<Void, Void, Void> {
+        private BoardGameDao boardGameDao;
+
+        public DeleteAllBoardGamesAsyncTask(BoardGameDao boardGameDao) { this.boardGameDao = boardGameDao;  }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            boardGameDao.deleteAllBoardGames();
             return null;
         }
     }

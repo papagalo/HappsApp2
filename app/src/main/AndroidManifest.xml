@@ -22,6 +22,8 @@
         android:parentActivityName=".HomeScreenActivity"></activity>
         <activity android:name=".AddEditVideoGameActivity"
             android:parentActivityName=".HomeScreenActivity"></activity>
+        <activity android:name=".AddEditBoardGameActivity"
+            android:parentActivityName=".HomeScreenActivity"></activity>
     </application>
 
 </manifest>
