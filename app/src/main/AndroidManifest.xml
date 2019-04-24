@@ -20,6 +20,8 @@
         </activity>
         <activity android:name=".AddEditConcertActivity"
         android:parentActivityName=".HomeScreenActivity"></activity>
+        <activity android:name=".AddEditVideoGameActivity"
+            android:parentActivityName=".HomeScreenActivity"></activity>
     </application>
 
 </manifest>

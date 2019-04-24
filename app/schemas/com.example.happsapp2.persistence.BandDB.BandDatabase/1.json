@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "9cfef81d1c42b7db7bee1acfa213c45c",
+    "identityHash": "8e6d85486edceb507922e7b8299580b8",
     "entities": [
       {
         "tableName": "band",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`bandID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `bandName` TEXT, `genreTags` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`bandID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `band name` TEXT, `genre tags` TEXT)",
         "fields": [
           {
             "fieldPath": "bandID",
@@ -16,13 +16,13 @@
           },
           {
             "fieldPath": "bandName",
-            "columnName": "bandName",
+            "columnName": "band name",
             "affinity": "TEXT",
             "notNull": false
           },
           {
             "fieldPath": "genreTags",
-            "columnName": "genreTags",
+            "columnName": "genre tags",
             "affinity": "TEXT",
             "notNull": false
           }
@@ -48,7 +48,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"9cfef81d1c42b7db7bee1acfa213c45c\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"8e6d85486edceb507922e7b8299580b8\")"
     ]
   }
 }

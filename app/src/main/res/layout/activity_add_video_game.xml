@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddEditConcertActivity"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/edit_text_video_game_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="name of game"
+        android:inputType="text"/>
+
+    <EditText
+        android:id="@+id/edit_text_genre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="genre"
+        android:inputType="text"/>
+
+    <EditText
+        android:id="@+id/edit_text_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="meetup location"
+        android:inputType="text" />
+
+
+    <EditText
+        android:id="@+id/edit_text_start_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="starting time"
+        android:inputType="text"/>
+
+    <EditText
+        android:id="@+id/edit_text_end_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="ending time"
+        android:inputType="text" />
+
+</LinearLayout>

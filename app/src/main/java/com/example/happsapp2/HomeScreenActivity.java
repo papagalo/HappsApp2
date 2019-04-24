@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Toast;
 
 
@@ -17,7 +18,9 @@ import com.example.happsapp2.fragments.FragmentConcert;
 import com.example.happsapp2.fragments.FragmentOutdoor;
 import com.example.happsapp2.fragments.FragmentVideoGame;
 import com.example.happsapp2.models.Concert;
+import com.example.happsapp2.models.VideoGame;
 import com.example.happsapp2.view_models.ConcertViewModel;
+import com.example.happsapp2.view_models.VideoGameViewModel;
 
 import java.util.List;
 
@@ -28,11 +31,21 @@ public class HomeScreenActivity extends AppCompatActivity {
     private ViewPager gViewPager;
     private ViewPagerAdapter gViewPagerAdapter;
     private ConcertViewModel gConcertViewModel;
+    private VideoGameViewModel gVideoGameViewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_main_activity);
+
+
+        gVideoGameViewModel = ViewModelProviders.of(this).get(VideoGameViewModel.class);
+        gVideoGameViewModel.getAllVideoGames().observe(this, new Observer<List<VideoGame>>() {
+           @Override
+           public void onChanged(@Nullable List<VideoGame> videoGames) {
+               Toast.makeText(HomeScreenActivity.this,"VIDEOGAMES!!",Toast.LENGTH_SHORT).show();
+           }
+        });
 
 
         gConcertViewModel = ViewModelProviders.of(this).get(ConcertViewModel.class);
@@ -44,6 +57,8 @@ public class HomeScreenActivity extends AppCompatActivity {
                 //This is where the RecyclerView will be updated
             }
         });
+
+
 
         gTabLayout = findViewById(R.id.tabLayout_id);
         gViewPager = findViewById(R.id.viewPager_id);

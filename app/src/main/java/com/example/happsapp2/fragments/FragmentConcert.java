@@ -63,8 +63,8 @@ public class FragmentConcert extends Fragment {
         adapter = new ConcertAdapter();
         recyclerView.setAdapter(adapter);
 
-        concertViewModel = ViewModelProviders.of(this).get(ConcertViewModel.class);
-        concertViewModel.getAllConcerts().observe(this, new Observer<List<Concert>>() {
+        concertViewModel = ViewModelProviders.of(getActivity()).get(ConcertViewModel.class);
+        concertViewModel.getAllConcerts().observe(getActivity(), new Observer<List<Concert>>() {
             @Override
             public void onChanged(@Nullable List<Concert> concerts) {
                 Log.d(TAG, "onChanged: FRAGMENT");

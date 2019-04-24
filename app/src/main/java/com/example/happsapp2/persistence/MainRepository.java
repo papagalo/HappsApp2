@@ -3,12 +3,13 @@ package com.example.happsapp2.persistence;
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
+import android.provider.MediaStore;
 
 import com.example.happsapp2.async.InsertAsyncTask;
-import com.example.happsapp2.models.Band;
+import com.example.happsapp2.models.VideoGame;
 import com.example.happsapp2.models.Category;
 import com.example.happsapp2.models.Concert;
-import com.example.happsapp2.persistence.BandDB.BandDao;
+import com.example.happsapp2.persistence.VideoGameDB.VideoGameDao;
 import com.example.happsapp2.persistence.ConcertDB.ConcertDao;
 
 import java.util.List;
@@ -18,14 +19,16 @@ public class MainRepository {
     private MainDatabase gMainDatabase;
     private ConcertDao concertDao;
     private LiveData<List<Concert>> allConcerts;
-    private LiveData<List<Band>> allBands;
-    private BandDao bandDao;
+    private LiveData<List<VideoGame>> allVideoGames;
+    private VideoGameDao videoGameDao;
 
 
     public MainRepository(Application application) {
         gMainDatabase = MainDatabase.getInstance(application);
         concertDao = gMainDatabase.getConcertDAO();
+        videoGameDao = gMainDatabase.getVideoGameDAO();
         allConcerts = concertDao.getAllConcerts();
+        allVideoGames = videoGameDao.getAllVideoGames();
     }
 
     //Categories
@@ -123,60 +126,79 @@ public class MainRepository {
         }
     }
 
-    //Bands
+    //VideoGames
 
-    public void insertBandTask(Band band) {    }
-
-    public void updateBand(Band band) {    }
-
-    public LiveData<List<Band>> retrieveBandsTask() { return allBands;  }
-
-    public void deleteEvent(Band band) {
-
+    public void insertVideoGameTask(VideoGame videoGame) {
+        new InsertVideoGameAsyncTask(videoGameDao).execute(videoGame);
     }
 
-    private static class InsertBandAsyncTask extends AsyncTask<Band, Void, Void> {
-        private BandDao bandDao;
+    public void updateVideoGame(VideoGame videoGame) {
+        new UpdateVideoGameAsyncTask(videoGameDao).execute(videoGame);
+    }
 
-        private InsertBandAsyncTask(BandDao bandDao) {
-            this.bandDao = bandDao;
+    public void deleteVideoGame(VideoGame videoGame) {
+        new DeleteVideoGameAsyncTask(videoGameDao).execute(videoGame);
+    }
+
+    public LiveData<List<VideoGame>> getAllVideoGames() {
+        return allVideoGames;
+    }
+
+    public void deleteAllVideoGames() {
+        new DeleteAllVideoGamesAsyncTask(videoGameDao).execute();
+    }
+
+    private static class InsertVideoGameAsyncTask extends AsyncTask<VideoGame, Void, Void> {
+        private VideoGameDao videoGameDao;
+
+        private InsertVideoGameAsyncTask(VideoGameDao videoGameDao) {
+            this.videoGameDao = videoGameDao;
         }
 
         @Override
-        protected Void doInBackground(Band... bands) {
-            bandDao.insertBand(bands[0]);
+        protected Void doInBackground(VideoGame... videoGames) {
+            videoGameDao.insertVideoGame(videoGames[0]);
             return null;
         }
     }
 
-    private static class UpdateBandAsyncTask extends AsyncTask<Band, Void, Void> {
-        private BandDao bandDao;
+    private static class UpdateVideoGameAsyncTask extends AsyncTask<VideoGame, Void, Void> {
+        private VideoGameDao videoGameDao;
 
-        private UpdateBandAsyncTask(BandDao bandDao) {
-            this.bandDao = bandDao;
+        private UpdateVideoGameAsyncTask(VideoGameDao videoGameDao) {
+            this.videoGameDao = videoGameDao;
         }
 
         @Override
-        protected Void doInBackground(Band... bands) {
-            bandDao.update(bands[0]);
+        protected Void doInBackground(VideoGame... videoGames) {
+            videoGameDao.update(videoGames[0]);
             return null;
         }
     }
 
-    private static class DeleteBandAsyncTask extends AsyncTask<Band, Void, Void> {
-        private BandDao bandDao;
+    private static class DeleteVideoGameAsyncTask extends AsyncTask<VideoGame, Void, Void> {
+        private VideoGameDao videoGameDao;
 
-        private DeleteBandAsyncTask(BandDao bandDao) {
-            this.bandDao = bandDao;
+        private DeleteVideoGameAsyncTask(VideoGameDao videoGameDao) {
+            this.videoGameDao = videoGameDao;
         }
 
         @Override
-        protected Void doInBackground(Band... bands) {
-            bandDao.delete(bands[0]);
+        protected Void doInBackground(VideoGame... videoGames) {
+            videoGameDao.delete(videoGames[0]);
             return null;
         }
     }
 
+    private static class DeleteAllVideoGamesAsyncTask extends AsyncTask<Void, Void, Void> {
+        private VideoGameDao videoGameDao;
 
+        public DeleteAllVideoGamesAsyncTask(VideoGameDao videoGameDao) { this.videoGameDao = videoGameDao;  }
 
+        @Override
+        protected Void doInBackground(Void... voids) {
+            videoGameDao.deleteAllVideoGames();
+            return null;
+        }
+    }
 }

@@ -16,9 +16,11 @@ import com.example.happsapp2.models.Following;
 import com.example.happsapp2.models.Places;
 import com.example.happsapp2.models.User;
 import com.example.happsapp2.models.UserFollowers;
+import com.example.happsapp2.models.VideoGame;
 import com.example.happsapp2.persistence.BandDB.BandDao;
 import com.example.happsapp2.persistence.CategoryDB.CategoryDao;
 import com.example.happsapp2.persistence.ConcertDB.ConcertDao;
+import com.example.happsapp2.persistence.VideoGameDB.VideoGameDao;
 
 import static android.content.ContentValues.TAG;
 
@@ -28,7 +30,8 @@ import static android.content.ContentValues.TAG;
                       User.class,
                       Following.class,
                       UserFollowers.class,
-                      Category.class}, version  = 3)
+                      Category.class,
+                      VideoGame.class}, version  = 5)
 public abstract class MainDatabase extends RoomDatabase {
     private static final String DATABASE_NAME = "main_database";
 
@@ -55,6 +58,7 @@ public abstract class MainDatabase extends RoomDatabase {
             super.onCreate(db);
             new PopulateConcertDbAsyncTask(instance).execute();
             new PopulateBandDbAsyncTask(instance).execute();
+            new PopulateVideoGameDbAsyncTask(instance).execute();
         }
     };
 
@@ -70,6 +74,26 @@ public abstract class MainDatabase extends RoomDatabase {
         @Override
         protected Void doInBackground(Void... voids) {
             Log.d(TAG, "doInBackground: DOINBACKGROUND");
+            return null;
+        }
+    }
+
+    private static class PopulateVideoGameDbAsyncTask extends AsyncTask<Void, Void, Void> {
+        private VideoGameDao videoGameDao;
+        private static final String TAG = "PopulateVideoGameDbAsyn";
+
+        private PopulateVideoGameDbAsyncTask(MainDatabase db) {
+            videoGameDao = db.getVideoGameDAO();
+            videoGameDao.insertVideoGame(new VideoGame("The Fritz", "Funk/Rock/Soul", "My House",
+                    "5:00 pm", "9:00 pm"));
+            Log.d(TAG, "PopulateVideoGameDbAsyncTask: GETDAO");
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            Log.d(TAG, "doInBackground: DOINBACKGROUND");
+            videoGameDao.insertVideoGame(new VideoGame("The Fritz", "Funk/Rock/Soul", "My House",
+                    "5:00 pm", "9:00 pm"));
             return null;
         }
     }
@@ -93,5 +117,6 @@ public abstract class MainDatabase extends RoomDatabase {
     public abstract BandDao getBandDAO();
     public abstract ConcertDao getConcertDAO();
     public abstract CategoryDao getCategoryDAO();
+    public abstract VideoGameDao getVideoGameDAO();
 
 }

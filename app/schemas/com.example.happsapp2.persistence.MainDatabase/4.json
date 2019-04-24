@@ -1,8 +1,8 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 3,
-    "identityHash": "f02c60ef603d2ce1a646fb6a24fef09e",
+    "version": 4,
+    "identityHash": "53996b2e6eac8aec11c0a6f39aee3d10",
     "entities": [
       {
         "tableName": "band",
@@ -389,11 +389,70 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "videoGames",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`videoGameID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `video game name` TEXT, `location` TEXT, `startTime` TEXT, `endTime` TEXT, `genre` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "videoGameID",
+            "columnName": "videoGameID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "vgName",
+            "columnName": "video game name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "location",
+            "columnName": "location",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "startTime",
+            "columnName": "startTime",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "endTime",
+            "columnName": "endTime",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "genre",
+            "columnName": "genre",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "videoGameID"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_videoGames_videoGameID",
+            "unique": false,
+            "columnNames": [
+              "videoGameID"
+            ],
+            "createSql": "CREATE  INDEX `index_videoGames_videoGameID` ON `${TABLE_NAME}` (`videoGameID`)"
+          }
+        ],
+        "foreignKeys": []
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"f02c60ef603d2ce1a646fb6a24fef09e\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"53996b2e6eac8aec11c0a6f39aee3d10\")"
     ]
   }
 }

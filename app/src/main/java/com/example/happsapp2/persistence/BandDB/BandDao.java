@@ -20,8 +20,11 @@ public interface BandDao {
     @Query("SELECT * FROM band;")
     LiveData<List<Band>> getAllBands();
 
-    @Query("SELECT * FROM band WHERE bandName = :bandName;")
-    List<Band> getBandWithCustomQuery(String bandName);
+    /*@Query("SELECT * FROM band WHERE bandName = :bandName;")
+    List<Band> getBandWithCustomQuery(String bandName);*/
+
+    @Query("DELETE FROM band")
+    void deleteAllBands();
 
     @Delete
     int delete(Band band);
