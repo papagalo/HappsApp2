@@ -1,44 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/new_main_act"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".HomeScreenActivity"
     android:orientation="vertical"
-    android:id="@+id/new_main_act">
+    tools:context=".HomeScreenActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/new_toolbar" />
 
-    </android.support.design.widget.AppBarLayout>
+    <!--
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></android.support.design.widget.AppBarLayout>
+    -->
 
- <!--   <android.support.v7.widget.Toolbar
-        android:id="@+id/happs_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorBlue"
-        app:layout_scrollFlags="scroll|enterAlways">
 
-    </android.support.v7.widget.Toolbar>
--->
+    <!--   <android.support.v7.widget.Toolbar
+           android:id="@+id/happs_toolbar"
+           android:layout_width="match_parent"
+           android:layout_height="?attr/actionBarSize"
+           android:background="@color/colorBlue"
+           app:layout_scrollFlags="scroll|enterAlways">
+
+       </android.support.v7.widget.Toolbar>
+   -->
 
     <android.support.design.widget.TabLayout
+        android:id="@+id/tabLayout_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/lightBlue"
-        app:tabMode="fixed"
         app:tabGravity="fill"
         app:tabIndicatorColor="@color/colorBlue"
-        android:id="@+id/tabLayout_id">
+        app:tabMode="fixed">
 
     </android.support.design.widget.TabLayout>
 
     <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager_id"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/viewPager_id">
+        android:layout_height="match_parent">
 
     </android.support.v4.view.ViewPager>
 

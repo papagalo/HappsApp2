@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light">
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -9,5 +9,18 @@
         <item name="android:statusBarColor">@color/darkGrey</item> <!-- Requires api 21 -->
     </style>
 
+    <style name="AddEventTheme" parent="Theme.AppCompat.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:statusBarColor">@color/darkGrey</item> <!-- Requires api 21 -->
+        <item name="navigationIcon">@drawable/ic_arrow_back_black_24dp</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name ="windowActionBar">false</item>
+        <item name ="windowNoTitle">true</item>
+    </style>
 
 </resources>

@@ -10,20 +10,28 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".EventActivity" />
-        <activity android:name=".HomeScreenActivity"
-            android:launchMode="singleTop">
+        <activity
+            android:name=".HomeScreenActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddEditConcertActivity"
-        android:parentActivityName=".HomeScreenActivity"></activity>
-        <activity android:name=".AddEditVideoGameActivity"
-            android:parentActivityName=".HomeScreenActivity"></activity>
-        <activity android:name=".AddEditBoardGameActivity"
-            android:parentActivityName=".HomeScreenActivity"></activity>
+        <activity
+            android:name=".AddEditConcertActivity"
+            android:parentActivityName=".HomeScreenActivity"
+            android:theme="@style/AddEventTheme"></activity>
+        <activity
+            android:name=".AddEditVideoGameActivity"
+            android:parentActivityName=".HomeScreenActivity"
+            android:theme="@style/AddEventTheme"></activity>
+        <activity
+            android:name=".AddEditBoardGameActivity"
+            android:parentActivityName=".HomeScreenActivity"
+            android:theme="@style/AddEventTheme"></activity>
     </application>
 
 </manifest>

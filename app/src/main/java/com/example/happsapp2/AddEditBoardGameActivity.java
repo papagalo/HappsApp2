@@ -3,6 +3,7 @@ package com.example.happsapp2;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -39,7 +40,8 @@ public class AddEditBoardGameActivity extends AppCompatActivity {
         editTextStartTime = findViewById(R.id.edit_text_board_game_start_time);
         editTextEndTime   = findViewById(R.id.edit_text_board_game_end_time);
 
-
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_black_24dp);
 
         Intent intent = getIntent();
