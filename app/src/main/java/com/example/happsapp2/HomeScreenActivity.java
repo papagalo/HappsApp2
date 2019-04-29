@@ -5,10 +5,15 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 
@@ -28,11 +33,12 @@ import java.util.List;
 
 public class HomeScreenActivity extends AppCompatActivity {
 
-    private TabLayout gTabLayout;
-    private ViewPager gViewPager;
-    private ViewPagerAdapter gViewPagerAdapter;
-    private ConcertViewModel gConcertViewModel;
-    private VideoGameViewModel gVideoGameViewModel;
+    private TabLayout mTabLayout;
+    private ViewPager mViewPager;
+    private ViewPagerAdapter mViewPagerAdapter;
+    private ConcertViewModel mConcertViewModel;
+    private VideoGameViewModel mVideoGameViewModel;
+    private DrawerLayout mDrawerLayout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,38 +46,53 @@ public class HomeScreenActivity extends AppCompatActivity {
         setContentView(R.layout.new_main_activity);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        gVideoGameViewModel = ViewModelProviders.of(this).get(VideoGameViewModel.class);
-        gVideoGameViewModel.getAllVideoGames().observe(this, new Observer<List<VideoGame>>() {
+
+        mDrawerLayout = findViewById(R.id.drawer_layout);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout,toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        mDrawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+        /*mVideoGameViewModel = ViewModelProviders.of(this).get(VideoGameViewModel.class);
+        mVideoGameViewModel.getAllVideoGames().observe(this, new Observer<List<VideoGame>>() {
            @Override
            public void onChanged(@Nullable List<VideoGame> videoGames) {
                Toast.makeText(HomeScreenActivity.this,"VIDEOGAMES!!",Toast.LENGTH_SHORT).show();
            }
         });
 
-
-        gConcertViewModel = ViewModelProviders.of(this).get(ConcertViewModel.class);
-        gConcertViewModel.getAllConcerts().observe(this, new Observer<List<Concert>>() {
+        mConcertViewModel = ViewModelProviders.of(this).get(ConcertViewModel.class);
+        mConcertViewModel.getAllConcerts().observe(this, new Observer<List<Concert>>() {
             @Override
             public void onChanged(@Nullable List<Concert> concerts) {
                 //Test for change in db
                 Toast.makeText(HomeScreenActivity.this, "onChanged",Toast.LENGTH_SHORT).show();
                 //This is where the RecyclerView will be updated
             }
-        });
+        });*/
 
 
+        mTabLayout = findViewById(R.id.tabLayout_id2);
+        mViewPager = findViewById(R.id.viewPager_id);
+        mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        gTabLayout = findViewById(R.id.tabLayout_id);
-        gViewPager = findViewById(R.id.viewPager_id);
-        gViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        mViewPagerAdapter.addFragment(new FragmentBoardGame(),"BoardGame");
+        mViewPagerAdapter.addFragment(new FragmentConcert(),"Concert");
+        mViewPagerAdapter.addFragment(new FragmentVideoGame(),"VideoGame");
+        //mViewPagerAdapter.addFragment(new FragmentOutdoor(),"Outdoor");
 
-        gViewPagerAdapter.addFragment(new FragmentBoardGame(),"BoardGame");
-        gViewPagerAdapter.addFragment(new FragmentConcert(),"Concert");
-        gViewPagerAdapter.addFragment(new FragmentVideoGame(),"VideoGame");
-        gViewPagerAdapter.addFragment(new FragmentOutdoor(),"Outdoor");
+        mViewPager.setAdapter(mViewPagerAdapter);
+        mTabLayout.setupWithViewPager(mViewPager);
 
-        gViewPager.setAdapter(gViewPagerAdapter);
-        gTabLayout.setupWithViewPager(gViewPager);
+    }
 
+    @Override
+    public void onBackPressed() {
+        if(mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            mDrawerLayout.closeDrawer(GravityCompat.START);
+        }
+        else {
+            super.onBackPressed();
+        }
     }
 }
