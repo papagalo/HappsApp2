@@ -6,7 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:statusBarColor">@color/darkGrey</item> <!-- Requires api 21 -->
+        <item name="android:statusBarColor">@android:color/transparent</item> <!-- Requires api 21 -->
     </style>
 
     <style name="AddEventTheme" parent="Theme.AppCompat.NoActionBar">
@@ -14,7 +14,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:statusBarColor">@color/darkGrey</item> <!-- Requires api 21 -->
+        <item name="android:statusBarColor">@android:color/transparent</item> <!-- Requires api 21 -->
         <item name="navigationIcon">@drawable/ic_arrow_back_black_24dp</item>
     </style>
 

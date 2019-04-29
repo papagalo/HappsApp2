@@ -3,7 +3,9 @@ package com.example.happsapp2;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
@@ -12,6 +14,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -25,13 +28,17 @@ import com.example.happsapp2.fragments.FragmentOutdoor;
 import com.example.happsapp2.fragments.FragmentVideoGame;
 import com.example.happsapp2.models.Concert;
 import com.example.happsapp2.models.VideoGame;
+import com.example.happsapp2.nav_drawer_fragments.AddEventFragment;
+import com.example.happsapp2.nav_drawer_fragments.LogoutFragment;
+import com.example.happsapp2.nav_drawer_fragments.MyEventsFragment;
+import com.example.happsapp2.nav_drawer_fragments.ProfileFragment;
 import com.example.happsapp2.view_models.ConcertViewModel;
 import com.example.happsapp2.view_models.VideoGameViewModel;
 
 import java.util.List;
 
 
-public class HomeScreenActivity extends AppCompatActivity {
+public class HomeScreenActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
@@ -48,6 +55,9 @@ public class HomeScreenActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         mDrawerLayout = findViewById(R.id.drawer_layout);
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout,toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -84,6 +94,30 @@ public class HomeScreenActivity extends AppCompatActivity {
         mViewPager.setAdapter(mViewPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
 
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        switch(menuItem.getItemId()) {
+            case R.id.nav_profile:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                    new ProfileFragment()).commit();
+                break;
+            case R.id.nav_add_event:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new AddEventFragment()).commit();
+                break;
+            case R.id.nav_my_events:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new MyEventsFragment()).commit();
+                break;
+            case R.id.nav_logout:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new LogoutFragment()).commit();
+                break;
+        }
+        mDrawerLayout.closeDrawer(GravityCompat.START);
+        return true;
     }
 
     @Override
