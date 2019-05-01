@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddEditConcertActivity"
+    android:theme="@style/ThemeOverlay.MaterialComponents.Light"
+    android:background="@color/lightGrey"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/new_toolbar" />
+
+    <Button
+        android:id="@+id/btn_add_concert"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:text="Add a New Concert MEetup"
+        android:background="@color/colorAccent"
+        android:layout_weight="33"
+        android:paddingTop="25dp"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:paddingBottom="25dp" />
+
+    <Button
+        android:id="@+id/btn_add_video_game"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add a New VideoGame Meetup"
+        android:background="@color/colorAccent"
+        android:layout_weight="33"
+        android:paddingTop="25dp"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:paddingBottom="25dp" />
+
+    <Button
+        android:id="@+id/btn_add_board_game"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add a New BoardGame Meetup" 
+        android:background="@color/colorAccent"
+        android:layout_weight="33"
+        android:paddingTop="25dp"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:paddingBottom="25dp"/>
+
+
+</LinearLayout>

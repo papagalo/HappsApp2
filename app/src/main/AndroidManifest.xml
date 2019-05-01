@@ -21,6 +21,10 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".SelectAddEvent"
+            android:parentActivityName=".HomeScreenActivity"
+            android:theme="@style/AddEventTheme"></activity>
+        <activity
             android:name=".AddEditConcertActivity"
             android:parentActivityName=".HomeScreenActivity"
             android:theme="@style/AddEventTheme"></activity>

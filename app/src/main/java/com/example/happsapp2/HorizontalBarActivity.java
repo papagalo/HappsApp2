@@ -10,7 +10,7 @@ import com.darwindeveloper.horizontalscrollmenulibrary.extras.MenuItem;
 
 public class HorizontalBarActivity extends AppCompatActivity {
 
-    HorizontalScrollMenuView gMenu;
+   /* HorizontalScrollMenuView gMenu;
     TextView gTextView;
 
     @Override
@@ -36,6 +36,6 @@ public class HorizontalBarActivity extends AppCompatActivity {
                 gTextView.setText(menuItem.getText());
             }
         });
-    }
+    }*/
 
 }

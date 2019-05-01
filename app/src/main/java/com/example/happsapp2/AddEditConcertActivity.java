@@ -1,5 +1,6 @@
 package com.example.happsapp2;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +10,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.happsapp2.models.Concert;
+import com.example.happsapp2.view_models.ConcertViewModel;
 
 public class AddEditConcertActivity extends AppCompatActivity {
     public static final String EXTRA_BAND_NAME =
@@ -30,6 +34,7 @@ public class AddEditConcertActivity extends AppCompatActivity {
     private EditText editTextLocation;
     private EditText editTextStartTime;
     private EditText editTextEndTime;
+    private ConcertViewModel concertViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +78,11 @@ public class AddEditConcertActivity extends AppCompatActivity {
             Toast.makeText(this, "Please fill out all fields", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        concertViewModel = ViewModelProviders.of(this).get(ConcertViewModel.class);
+        Concert concert = new Concert(bandName, genre, location, startTime, endTime);
+        concertViewModel.insert(concert);
+
 
         Intent data = new Intent();
         data.putExtra(EXTRA_BAND_NAME, bandName);

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,9 +31,9 @@ import java.util.List;
 import static android.app.Activity.RESULT_OK;
 import static android.content.ContentValues.TAG;
 
-public class FragmentBoardGame extends Fragment {
-    static final int ADD_NOTE_REQUEST = 1;
-    static final int EDIT_NOTE_REQUEST = 2;
+public class FragmentBoardGame extends Fragment{
+    static final int ADD_BG_REQUEST = 1;
+    static final int EDIT_BG_REQUEST = 2;
     private RecyclerView recyclerView;
     private BoardGameViewModel boardGameViewModel;
     private BoardGameAdapter adapter;
@@ -56,7 +57,7 @@ public class FragmentBoardGame extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), AddEditBoardGameActivity.class);
-                startActivityForResult(intent, ADD_NOTE_REQUEST);
+                startActivityForResult(intent, ADD_BG_REQUEST);
             }
         });
 
@@ -67,7 +68,7 @@ public class FragmentBoardGame extends Fragment {
         boardGameViewModel.getAllBoardGames().observe(getActivity(), new Observer<List<BoardGame>>() {
             @Override
             public void onChanged(@Nullable List<BoardGame> boardGames) {
-                Log.d(TAG, "onChanged: FRAGMENT");
+                Log.d(TAG, "onChanged: OLD FRAGMENT");
                 adapter.submitList(boardGames);
             }
         });
@@ -83,7 +84,7 @@ public class FragmentBoardGame extends Fragment {
                 intent.putExtra(AddEditBoardGameActivity.EXTRA_BG_END_TIME, boardGame.getEndTime());
                 intent.putExtra(AddEditBoardGameActivity.EXTRA_BG_ID, boardGame.getBoardGameID());
 
-                startActivityForResult(intent, EDIT_NOTE_REQUEST);
+                startActivityForResult(intent, EDIT_BG_REQUEST);
             }
         });
 
@@ -94,7 +95,7 @@ public class FragmentBoardGame extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode,resultCode,data);
 
-        if(requestCode == ADD_NOTE_REQUEST && resultCode == RESULT_OK) {
+        if(requestCode == ADD_BG_REQUEST && resultCode == RESULT_OK) {
             String bgName = data.getStringExtra(AddEditBoardGameActivity.EXTRA_BG_NAME);
             String location = data.getStringExtra(AddEditBoardGameActivity.EXTRA_BG_LOCATION);
             String startTime = data.getStringExtra(AddEditBoardGameActivity.EXTRA_BG_START_TIME);
@@ -104,7 +105,7 @@ public class FragmentBoardGame extends Fragment {
             boardGameViewModel.insert(boardGame);
 
             Toast.makeText(getActivity(),"BoardGame Saved", Toast.LENGTH_SHORT).show();
-        } else if(requestCode == EDIT_NOTE_REQUEST && resultCode == RESULT_OK) {
+        } else if(requestCode == EDIT_BG_REQUEST && resultCode == RESULT_OK) {
             int id = data.getIntExtra(AddEditBoardGameActivity.EXTRA_BG_ID, -1);
 
             if (id == -1) {
@@ -142,6 +143,7 @@ public class FragmentBoardGame extends Fragment {
                 return super.onOptionsItemSelected(item);
         }
     }
+
    /* @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

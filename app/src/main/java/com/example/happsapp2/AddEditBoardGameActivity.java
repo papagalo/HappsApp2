@@ -1,5 +1,6 @@
 package com.example.happsapp2;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.happsapp2.R;
+import com.example.happsapp2.models.BoardGame;
+import com.example.happsapp2.view_models.BoardGameViewModel;
 
 public class AddEditBoardGameActivity extends AppCompatActivity {
     public static final String EXTRA_BG_NAME =
@@ -24,7 +27,7 @@ public class AddEditBoardGameActivity extends AppCompatActivity {
     public static final String EXTRA_BG_ID =
             "com.example.happsapp2.EXTRA_BG_ID";
 
-
+    private BoardGameViewModel boardGameViewModel;
     private EditText editTextBoardGameName;
     private EditText editTextLocation;
     private EditText editTextStartTime;
@@ -68,6 +71,9 @@ public class AddEditBoardGameActivity extends AppCompatActivity {
             Toast.makeText(this, "Please fill out all fields", Toast.LENGTH_SHORT).show();
             return;
         }
+        boardGameViewModel = ViewModelProviders.of(this).get(BoardGameViewModel.class);
+        BoardGame boardGame = new BoardGame(bgName, location, startTime, endTime);
+        boardGameViewModel.insert(boardGame);
 
         Intent data = new Intent();
         data.putExtra(EXTRA_BG_NAME, bgName);
@@ -79,7 +85,7 @@ public class AddEditBoardGameActivity extends AppCompatActivity {
         if (id != -1) {
             data.putExtra(EXTRA_BG_ID, id);
         }
-
+        Toast.makeText(this, "SAVE BG RESULT_OK", Toast.LENGTH_SHORT).show();
         setResult(RESULT_OK, data);
         finish();
     }

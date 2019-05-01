@@ -1,5 +1,6 @@
 package com.example.happsapp2;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.happsapp2.models.VideoGame;
+import com.example.happsapp2.view_models.VideoGameViewModel;
 
 public class AddEditVideoGameActivity extends AppCompatActivity {
     public static final String EXTRA_VG_NAME =
@@ -30,6 +34,7 @@ public class AddEditVideoGameActivity extends AppCompatActivity {
     private EditText editTextLocation;
     private EditText editTextStartTime;
     private EditText editTextEndTime;
+    private VideoGameViewModel videoGameViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +78,10 @@ public class AddEditVideoGameActivity extends AppCompatActivity {
             Toast.makeText(this, "Please fill out all fields", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        videoGameViewModel = ViewModelProviders.of(this).get(VideoGameViewModel.class);
+        VideoGame videoGame = new VideoGame(videoGameName, genre, location, startTime, endTime);
+        videoGameViewModel.insert(videoGame);
 
         Intent data = new Intent();
         data.putExtra(EXTRA_VG_NAME, videoGameName);

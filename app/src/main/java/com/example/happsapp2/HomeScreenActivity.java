@@ -1,7 +1,9 @@
 package com.example.happsapp2;
 
+
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,29 +15,27 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
+import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 
-
+import com.example.happsapp2.adapters.BoardGameAdapter;
 import com.example.happsapp2.adapters.ViewPagerAdapter;
 import com.example.happsapp2.fragments.FragmentBoardGame;
 import com.example.happsapp2.fragments.FragmentConcert;
-import com.example.happsapp2.fragments.FragmentOutdoor;
 import com.example.happsapp2.fragments.FragmentVideoGame;
-import com.example.happsapp2.models.Concert;
-import com.example.happsapp2.models.VideoGame;
-import com.example.happsapp2.nav_drawer_fragments.AddEventFragment;
+import com.example.happsapp2.models.BoardGame;
 import com.example.happsapp2.nav_drawer_fragments.LogoutFragment;
 import com.example.happsapp2.nav_drawer_fragments.MyEventsFragment;
 import com.example.happsapp2.nav_drawer_fragments.ProfileFragment;
+import com.example.happsapp2.view_models.BoardGameViewModel;
 import com.example.happsapp2.view_models.ConcertViewModel;
 import com.example.happsapp2.view_models.VideoGameViewModel;
 
 import java.util.List;
+
+import static android.content.ContentValues.TAG;
 
 
 public class HomeScreenActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -46,6 +46,9 @@ public class HomeScreenActivity extends AppCompatActivity implements NavigationV
     private ConcertViewModel mConcertViewModel;
     private VideoGameViewModel mVideoGameViewModel;
     private DrawerLayout mDrawerLayout;
+    static final int ADD_BG_REQUEST = 1;
+    BoardGameViewModel boardGameViewModel;
+    BoardGameAdapter boardGameAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -99,13 +102,18 @@ public class HomeScreenActivity extends AppCompatActivity implements NavigationV
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch(menuItem.getItemId()) {
+            case R.id.nav_home:
+                /*Intent intent = new Intent(this, HomeScreenActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);*/
+                break;
             case R.id.nav_profile:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     new ProfileFragment()).commit();
                 break;
             case R.id.nav_add_event:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new AddEventFragment()).commit();
+                Intent intent = new Intent(this, SelectAddEvent.class);
+                startActivity(intent);
                 break;
             case R.id.nav_my_events:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,

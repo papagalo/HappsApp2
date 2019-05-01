@@ -47,11 +47,11 @@
                     android:layout_weight="25"
                     android:src="@drawable/ic_music_note" />
 
-                <ImageView
+                <!--<ImageView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="25"
-                    android:src="@drawable/ic_videogames" />
+                    android:src="@drawable/ic_videogames" />-->
 
                 <ImageView
                     android:layout_width="0dp"
