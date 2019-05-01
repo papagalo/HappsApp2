@@ -7,10 +7,12 @@ import android.provider.MediaStore;
 
 import com.example.happsapp2.async.InsertAsyncTask;
 import com.example.happsapp2.models.BoardGame;
+import com.example.happsapp2.models.User;
 import com.example.happsapp2.models.VideoGame;
 import com.example.happsapp2.models.Category;
 import com.example.happsapp2.models.Concert;
 import com.example.happsapp2.persistence.BoardGameDB.BoardGameDao;
+import com.example.happsapp2.persistence.UserDB.UserDao;
 import com.example.happsapp2.persistence.VideoGameDB.VideoGameDao;
 import com.example.happsapp2.persistence.ConcertDB.ConcertDao;
 
@@ -25,15 +27,19 @@ public class MainRepository {
     private LiveData<List<VideoGame>> allVideoGames;
     private BoardGameDao boardGameDao;
     private LiveData<List<BoardGame>> allBoardGames;
+    private UserDao userDao;
+    private LiveData<List<User>> allUsers;
 
     public MainRepository(Application application) {
         gMainDatabase = MainDatabase.getInstance(application);
         concertDao = gMainDatabase.getConcertDAO();
         videoGameDao = gMainDatabase.getVideoGameDAO();
         boardGameDao = gMainDatabase.getBoardGameDAO();
+        userDao = gMainDatabase.getUserDao();
         allBoardGames = boardGameDao.getAllBoardGames();
         allConcerts = concertDao.getAllConcerts();
         allVideoGames = videoGameDao.getAllVideoGames();
+        allUsers = userDao.getAllUsers();
     }
 
     //Categories
@@ -279,6 +285,83 @@ public class MainRepository {
         @Override
         protected Void doInBackground(Void... voids) {
             boardGameDao.deleteAllBoardGames();
+            return null;
+        }
+    }
+    
+    //Users 
+    public void insertUserTask(User user) {
+        new InsertUserAsyncTask(userDao).execute(user);
+    }
+
+    public void updateUser(User user) {
+        new UpdateUserAsyncTask(userDao).execute(user);
+    }
+
+    public void deleteUser(User user) {
+        new DeleteUserAsyncTask(userDao).execute(user);
+    }
+
+    public LiveData<List<User>> getAllUsers() {
+        return allUsers;
+    }
+
+    public User getSpecificUser(int user_ID) { return userDao.getUserWithCustomQuery(user_ID);  }
+
+    public void deleteAllUsers() {
+        new DeleteAllUsersAsyncTask(userDao).execute();
+    }
+
+    private static class InsertUserAsyncTask extends AsyncTask<User, Void, Void> {
+        private UserDao userDao;
+
+        private InsertUserAsyncTask(UserDao userDao) {
+            this.userDao = userDao;
+        }
+
+        @Override
+        protected Void doInBackground(User... users) {
+            userDao.insertUser(users[0]);
+            return null;
+        }
+    }
+
+    private static class UpdateUserAsyncTask extends AsyncTask<User, Void, Void> {
+        private UserDao userDao;
+
+        private UpdateUserAsyncTask(UserDao userDao) {
+            this.userDao = userDao;
+        }
+
+        @Override
+        protected Void doInBackground(User... users) {
+            userDao.update(users[0]);
+            return null;
+        }
+    }
+
+    private static class DeleteUserAsyncTask extends AsyncTask<User, Void, Void> {
+        private UserDao userDao;
+
+        private DeleteUserAsyncTask(UserDao userDao) {
+            this.userDao = userDao;
+        }
+
+        @Override
+        protected Void doInBackground(User... users) {
+            userDao.delete(users[0]);
+            return null;
+        }
+    }
+
+    private static class DeleteAllUsersAsyncTask extends AsyncTask<Void, Void, Void> {
+        private UserDao userDao;
+
+        public DeleteAllUsersAsyncTask(UserDao userDao) { this.userDao = userDao;  }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            userDao.deleteAllUsers();
             return null;
         }
     }

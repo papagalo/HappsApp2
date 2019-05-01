@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 6,
-    "identityHash": "2e0a39f7c0f694192f514c82ef192a5f",
+    "identityHash": "917e4bb05a6bc3aca39bfa053b93711d",
     "entities": [
       {
         "tableName": "band",
@@ -196,8 +196,8 @@
         "foreignKeys": []
       },
       {
-        "tableName": "User",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `FName` TEXT NOT NULL, `LName` TEXT NOT NULL, `handle` TEXT NOT NULL)",
+        "tableName": "userTable",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `FName` TEXT NOT NULL, `LName` TEXT NOT NULL, `userName` TEXT NOT NULL, `password` TEXT)",
         "fields": [
           {
             "fieldPath": "userID",
@@ -218,10 +218,16 @@
             "notNull": true
           },
           {
-            "fieldPath": "handle",
-            "columnName": "handle",
+            "fieldPath": "userName",
+            "columnName": "userName",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "password",
+            "columnName": "password",
+            "affinity": "TEXT",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -232,19 +238,19 @@
         },
         "indices": [
           {
-            "name": "index_User_userID",
+            "name": "index_userTable_userID",
             "unique": false,
             "columnNames": [
               "userID"
             ],
-            "createSql": "CREATE  INDEX `index_User_userID` ON `${TABLE_NAME}` (`userID`)"
+            "createSql": "CREATE  INDEX `index_userTable_userID` ON `${TABLE_NAME}` (`userID`)"
           }
         ],
         "foreignKeys": []
       },
       {
         "tableName": "Following",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`user_ID` INTEGER NOT NULL, `band_ID` INTEGER NOT NULL, `concert_ID` INTEGER NOT NULL, `place_ID` INTEGER NOT NULL, PRIMARY KEY(`user_ID`), FOREIGN KEY(`user_ID`) REFERENCES `User`(`userID`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`band_ID`) REFERENCES `band`(`bandID`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`concert_ID`) REFERENCES `concerts`(`concertID`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`place_ID`) REFERENCES `Places`(`placeID`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`user_ID` INTEGER NOT NULL, `band_ID` INTEGER NOT NULL, `concert_ID` INTEGER NOT NULL, `place_ID` INTEGER NOT NULL, PRIMARY KEY(`user_ID`), FOREIGN KEY(`user_ID`) REFERENCES `userTable`(`userID`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`band_ID`) REFERENCES `band`(`bandID`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`concert_ID`) REFERENCES `concerts`(`concertID`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`place_ID`) REFERENCES `Places`(`placeID`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "user_ID",
@@ -305,7 +311,7 @@
         ],
         "foreignKeys": [
           {
-            "table": "User",
+            "table": "userTable",
             "onDelete": "NO ACTION",
             "onUpdate": "NO ACTION",
             "columns": [
@@ -352,7 +358,7 @@
       },
       {
         "tableName": "UserFollowers",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`user_ID` INTEGER NOT NULL, `follower_ID` INTEGER NOT NULL, PRIMARY KEY(`user_ID`, `follower_ID`), FOREIGN KEY(`user_ID`) REFERENCES `User`(`userID`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`follower_ID`) REFERENCES `User`(`userID`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`user_ID` INTEGER NOT NULL, `follower_ID` INTEGER NOT NULL, PRIMARY KEY(`user_ID`, `follower_ID`), FOREIGN KEY(`user_ID`) REFERENCES `userTable`(`userID`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`follower_ID`) REFERENCES `userTable`(`userID`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "user_ID",
@@ -394,7 +400,7 @@
         ],
         "foreignKeys": [
           {
-            "table": "User",
+            "table": "userTable",
             "onDelete": "NO ACTION",
             "onUpdate": "NO ACTION",
             "columns": [
@@ -405,7 +411,7 @@
             ]
           },
           {
-            "table": "User",
+            "table": "userTable",
             "onDelete": "NO ACTION",
             "onUpdate": "NO ACTION",
             "columns": [
@@ -505,7 +511,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"2e0a39f7c0f694192f514c82ef192a5f\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"917e4bb05a6bc3aca39bfa053b93711d\")"
     ]
   }
 }

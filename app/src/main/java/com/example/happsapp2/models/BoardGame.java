@@ -56,7 +56,9 @@ public class BoardGame implements Parcelable {
         }
     };
 
-    public String getBgName() { return bgName; }
+    public String getBgName() {
+        return bgName;
+    }
 
     public void setBgName(String bandName) {
         this.bgName = bandName;
@@ -66,7 +68,9 @@ public class BoardGame implements Parcelable {
         return location;
     }
 
-    public void setLocation(String location) { this.location = location; }
+    public void setLocation(String location) {
+        this.location = location;
+    }
 
     public String getStartTime() {
         return startTime;
@@ -84,9 +88,13 @@ public class BoardGame implements Parcelable {
         this.endTime = endTime;
     }
 
-    public int getBoardGameID() { return boardGameID;  }
+    public int getBoardGameID() {
+        return boardGameID;
+    }
 
-    public void setBoardGameID(int boardGameID) { this.boardGameID = boardGameID;   }
+    public void setBoardGameID(int boardGameID) {
+        this.boardGameID = boardGameID;
+    }
 
     @Override
     public String toString() {

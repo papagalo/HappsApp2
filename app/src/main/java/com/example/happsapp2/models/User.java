@@ -3,10 +3,12 @@ package com.example.happsapp2.models;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
-@Entity(indices = @Index("userID"))
-public class User {
+@Entity(tableName = "userTable", indices = {@Index("userID")})
+public class User implements Parcelable {
 
     @NonNull
     @PrimaryKey(autoGenerate = true)
@@ -19,9 +21,36 @@ public class User {
     private String LName;
 
     @NonNull
-    private String handle;
+    private String userName;
 
+    private String password;
 
+    public User(@NonNull String FName, @NonNull String LName,
+                @NonNull String userName, @NonNull String password) {
+        this.FName = FName;
+        this.LName = LName;
+        this.userName = userName;
+        this.password = password;
+    }
+
+    protected User(Parcel in) {
+        FName = in.readString();
+        LName = in.readString();
+        userName = in.readString();
+        password = in.readString();
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) { return new User(in);  }
+
+        @Override
+        public User[] newArray(int size) { return new User[size];  }
+    };
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public void setUserID(int userID) {
         this.userID = userID;
@@ -35,8 +64,8 @@ public class User {
         this.LName = LName;
     }
 
-    public void setHandle(@NonNull String handle) {
-        this.handle = handle;
+    public void setUserName(@NonNull String userName) {
+        this.userName = userName;
     }
 
     public int getUserID() {
@@ -51,17 +80,24 @@ public class User {
         return LName;
     }
 
+    public String getPassword() { return password; }
+
     @NonNull
-    public String getHandle() {
-        return handle;
-    }
-
-    public User(int userID, @NonNull String FName, @NonNull String LName, @NonNull String handle) {
-        this.userID = userID;
-        this.FName = FName;
-        this.LName = LName;
-        this.handle = handle;
+    public String getUserName() {
+        return userName;
     }
 
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(FName);
+        dest.writeString(LName);
+        dest.writeString(userName);
+        dest.writeString(password);
+    }
 }

@@ -22,6 +22,7 @@ import com.example.happsapp2.persistence.BandDB.BandDao;
 import com.example.happsapp2.persistence.BoardGameDB.BoardGameDao;
 import com.example.happsapp2.persistence.CategoryDB.CategoryDao;
 import com.example.happsapp2.persistence.ConcertDB.ConcertDao;
+import com.example.happsapp2.persistence.UserDB.UserDao;
 import com.example.happsapp2.persistence.VideoGameDB.VideoGameDao;
 
 import static android.content.ContentValues.TAG;
@@ -34,7 +35,7 @@ import static android.content.ContentValues.TAG;
                       Following.class,
                       UserFollowers.class,
                       Category.class,
-                      VideoGame.class}, version  = 6)
+                      VideoGame.class}, version  = 7)
 public abstract class MainDatabase extends RoomDatabase {
     private static final String DATABASE_NAME = "main_database";
 
@@ -143,5 +144,6 @@ public abstract class MainDatabase extends RoomDatabase {
     public abstract CategoryDao getCategoryDAO();
     public abstract VideoGameDao getVideoGameDAO();
     public abstract BoardGameDao getBoardGameDAO();
+    public abstract UserDao getUserDao();
 
 }
