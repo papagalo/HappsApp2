@@ -9,14 +9,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.happsapp2.models.User;
-import com.example.happsapp2.sqlite.DatabaseHelper;
+import com.example.happsapp2.sqlite.UserDatabaseHelper;
 
 public class LoginActivity extends AppCompatActivity {
-    private DatabaseHelper databaseHelper;
+    private UserDatabaseHelper databaseHelper;
 
-
-    private User userToMatch;
     private Button loginButton;
     private Button registerButton;
     private EditText editTextUserName;
@@ -37,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
         editTextUserName = findViewById(R.id.edit_text_user_name);
         editTextPassword = findViewById(R.id.edit_text_password);
 
-        databaseHelper = new DatabaseHelper(getApplicationContext());
+        databaseHelper = new UserDatabaseHelper(getApplicationContext());
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,7 +58,6 @@ public class LoginActivity extends AppCompatActivity {
         if (databaseHelper.validateUserCredentials(uName, pw)) {
             Intent intent = new Intent(this, HomeScreenActivity.class);
             startActivity(intent);
-
             finish();
         } else {
             Toast.makeText(this, "Incorrect Name/Password", Toast.LENGTH_SHORT).show();

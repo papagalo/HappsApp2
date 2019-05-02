@@ -1,14 +1,8 @@
 package com.example.happsapp2;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,11 +10,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.happsapp2.models.User;
-import com.example.happsapp2.persistence.MainRepository;
-import com.example.happsapp2.sqlite.DatabaseHelper;
+import com.example.happsapp2.sqlite.UserDatabaseHelper;
 import com.example.happsapp2.view_models.UserViewModel;
-
-import java.util.List;
 
 public class RegisterUserActivity extends AppCompatActivity {
     private UserViewModel userViewModel;
@@ -31,7 +22,7 @@ public class RegisterUserActivity extends AppCompatActivity {
     private EditText editTextNewPassword;
     private EditText editTextConfirmPassword;
     public static final String TAG = "REGISTER USER ACTIVITY";
-    private DatabaseHelper databaseHelper;
+    private UserDatabaseHelper databaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +35,7 @@ public class RegisterUserActivity extends AppCompatActivity {
         editTextNewPassword = findViewById(R.id.edit_text_new_password);
         editTextConfirmPassword = findViewById(R.id.edit_text_confirm_password);
 
-        databaseHelper = new DatabaseHelper(getApplicationContext());
+        databaseHelper = new UserDatabaseHelper(getApplicationContext());
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

@@ -51,7 +51,7 @@ public class User implements Parcelable {
         public User[] newArray(int size) { return new User[size];  }
     };
 
-    public void setPassword(String password) {
+    public void setUserPassword(String password) {
         this.userPassword = password;
     }
 

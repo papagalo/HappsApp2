@@ -34,9 +34,9 @@
                 android:id="@+id/tabLayout_id2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/lightBlue"
+                android:background="@color/darkGrey"
                 app:tabGravity="fill"
-                app:tabIndicatorColor="@color/colorBlue"
+                app:tabIndicatorColor="@color/haileysTurquoise"
                 app:tabMode="fixed"/>
             <android.support.v4.view.ViewPager
                 android:id="@+id/viewPager_id"

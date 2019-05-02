@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.happsapp2.models.User;
 
-public class DatabaseHelper extends SQLiteOpenHelper {
+public class UserDatabaseHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 4;
 
@@ -27,7 +27,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_USER_PASSWORD= "userPassword";
 
     //Constructor
-    public DatabaseHelper(Context context) {
+    public UserDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -129,7 +129,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return false;
     }
 
-    /**
+    /*
      * This method to check user exist or not
      *
      * @param userName
@@ -150,7 +150,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String[] selectionArgs = {userName, password};
 
         // query user table with conditions
-        /**
+        /*
          * Here query function is used to fetch records from user table this function works like we use sql query.
          * SQL query equivalent to this query function is
          * SELECT user_id FROM user WHERE user_email = 'jack@androidtutorialshub.com' AND user_password = 'qwerty';
@@ -167,11 +167,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         cursor.close();
         db.close();
-        if (cursorCount > 0) {
-            return true;
-        }
-
-        return false;
+        return (cursorCount > 0);
     }
 
 }
