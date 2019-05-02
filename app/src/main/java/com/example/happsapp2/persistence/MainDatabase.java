@@ -35,7 +35,7 @@ import static android.content.ContentValues.TAG;
                       Following.class,
                       UserFollowers.class,
                       Category.class,
-                      VideoGame.class}, version  = 7)
+                      VideoGame.class}, version  = 8)
 public abstract class MainDatabase extends RoomDatabase {
     private static final String DATABASE_NAME = "main_database";
 

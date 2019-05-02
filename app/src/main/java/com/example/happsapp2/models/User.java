@@ -1,5 +1,6 @@
 package com.example.happsapp2.models;
 
+import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
@@ -21,23 +22,25 @@ public class User implements Parcelable {
     private String LName;
 
     @NonNull
+    @ColumnInfo(name = "userName")
     private String userName;
 
-    private String password;
+    @ColumnInfo(name = "userPassword")
+    private String userPassword;
 
-    public User(@NonNull String FName, @NonNull String LName,
-                @NonNull String userName, @NonNull String password) {
+    public User(@NonNull String userName, @NonNull String LName,
+                @NonNull String FName, @NonNull String userPassword) {
         this.FName = FName;
         this.LName = LName;
         this.userName = userName;
-        this.password = password;
+        this.userPassword = userPassword;
     }
 
     protected User(Parcel in) {
         FName = in.readString();
         LName = in.readString();
         userName = in.readString();
-        password = in.readString();
+        userPassword = in.readString();
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -49,7 +52,7 @@ public class User implements Parcelable {
     };
 
     public void setPassword(String password) {
-        this.password = password;
+        this.userPassword = password;
     }
 
     public void setUserID(int userID) {
@@ -80,7 +83,7 @@ public class User implements Parcelable {
         return LName;
     }
 
-    public String getPassword() { return password; }
+    public String getUserPassword() { return userPassword; }
 
     @NonNull
     public String getUserName() {
@@ -98,6 +101,6 @@ public class User implements Parcelable {
         dest.writeString(FName);
         dest.writeString(LName);
         dest.writeString(userName);
-        dest.writeString(password);
+        dest.writeString(userPassword);
     }
 }

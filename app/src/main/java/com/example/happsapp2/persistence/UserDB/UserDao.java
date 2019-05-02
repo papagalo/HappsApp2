@@ -20,9 +20,6 @@ public interface UserDao {
     @Query("SELECT * FROM userTable")
     LiveData<List<User>> getAllUsers();
 
-    @Query("SELECT * FROM userTable WHERE userID = :user_id;")
-    User getUserWithCustomQuery(int user_id);
-
     @Query("DELETE FROM usertable")
     void deleteAllUsers();
 
@@ -32,4 +29,8 @@ public interface UserDao {
     @Update
     int update(User user);
 
+    @Query("SELECT * FROM userTable WHERE userName = :user_name")
+    //LiveData<List<User>> getUserByName(String user_name);
+    //LiveData<User> getUserByName(String user_name);
+    User getUserByName(String user_name);
 }

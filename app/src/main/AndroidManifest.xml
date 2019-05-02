@@ -11,9 +11,9 @@
         android:theme="@style/AppTheme">
         <activity android:name=".EventActivity" />
         <activity
-            android:name=".HomeScreenActivity"
+            android:name=".LoginActivity"
             android:launchMode="singleTop"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -37,8 +37,13 @@
             android:parentActivityName=".HomeScreenActivity"
             android:theme="@style/AddEventTheme"></activity>
         <activity
-            android:name=".LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:name=".HomeScreenActivity"
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".LoginActivity"></activity>
+        <activity
+            android:name=".RegisterUserActivity"
+            android:theme="@style/AddEventTheme"
+            android:parentActivityName=".LoginActivity"></activity>
     </application>
 
 </manifest>

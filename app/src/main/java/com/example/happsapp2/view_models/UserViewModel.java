@@ -13,7 +13,7 @@ import java.util.List;
 public class UserViewModel extends AndroidViewModel {
     private MainRepository repository;
     private LiveData<List<User>> allUsers;
-
+    private LiveData<List<User>> nameMatchedUser;
     public UserViewModel(@NonNull Application application) {
         super(application);
         repository = new MainRepository(application);
@@ -36,8 +36,8 @@ public class UserViewModel extends AndroidViewModel {
         return allUsers;
     }
 
-    public User getSpecificUser(int user_ID) {
-        return repository.getSpecificUser(user_ID);
+    public User getUserByName(String userName) {
+        return repository.getUserByName(userName);
     }
 
     public void deleteAllUsers() { repository.deleteAllUsers(); }

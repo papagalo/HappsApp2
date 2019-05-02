@@ -4,6 +4,8 @@ import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.example.happsapp2.async.InsertAsyncTask;
 import com.example.happsapp2.models.BoardGame;
@@ -20,6 +22,7 @@ import java.util.List;
 
 public class MainRepository {
 
+    public static final String TAG = "MAINREPOSITORY";
     private MainDatabase gMainDatabase;
     private ConcertDao concertDao;
     private LiveData<List<Concert>> allConcerts;
@@ -29,13 +32,17 @@ public class MainRepository {
     private LiveData<List<BoardGame>> allBoardGames;
     private UserDao userDao;
     private LiveData<List<User>> allUsers;
+    private User searchedUser;
 
     public MainRepository(Application application) {
+        //Get Single Instance of Database
         gMainDatabase = MainDatabase.getInstance(application);
+        //Assign Data Access Objects
         concertDao = gMainDatabase.getConcertDAO();
         videoGameDao = gMainDatabase.getVideoGameDAO();
         boardGameDao = gMainDatabase.getBoardGameDAO();
         userDao = gMainDatabase.getUserDao();
+        //assign Live Data
         allBoardGames = boardGameDao.getAllBoardGames();
         allConcerts = concertDao.getAllConcerts();
         allVideoGames = videoGameDao.getAllVideoGames();
@@ -306,10 +313,39 @@ public class MainRepository {
         return allUsers;
     }
 
-    public User getSpecificUser(int user_ID) { return userDao.getUserWithCustomQuery(user_ID);  }
+    /*public LiveData<List<User>> getUserByName(String user_name) {
+        searchedUser = userDao.getUserByName(user_name);
+        return searchedUser;
+    }*/
+
+    public User getUserByName(String userName) {
+        return userDao.getUserByName(userName);
+    }
 
     public void deleteAllUsers() {
         new DeleteAllUsersAsyncTask(userDao).execute();
+    }
+
+    private static class FindUserByNameAsyncTask extends AsyncTask<User, Void, User> {
+        private UserDao userDao;
+
+        private FindUserByNameAsyncTask(UserDao userDao) {
+            this.userDao = userDao;
+        }
+
+        @Override
+        protected User doInBackground(User... users) {
+            return userDao.getUserByName(users[0].getUserName());
+        }
+
+        @Override
+        protected void onPostExecute(User user) {
+            processUser(user);
+        }
+    }
+
+    public static String processUser(User u) {
+        return u.getUserName();
     }
 
     private static class InsertUserAsyncTask extends AsyncTask<User, Void, Void> {
