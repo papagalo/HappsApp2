@@ -30,16 +30,16 @@ public class User implements Parcelable {
 
     public User(@NonNull String userName, @NonNull String LName,
                 @NonNull String FName, @NonNull String userPassword) {
-        this.FName = FName;
-        this.LName = LName;
         this.userName = userName;
+        this.LName = LName;
+        this.FName = FName;
         this.userPassword = userPassword;
     }
 
     protected User(Parcel in) {
-        FName = in.readString();
-        LName = in.readString();
         userName = in.readString();
+        LName = in.readString();
+        FName = in.readString();
         userPassword = in.readString();
     }
 
@@ -98,9 +98,9 @@ public class User implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(FName);
-        dest.writeString(LName);
         dest.writeString(userName);
+        dest.writeString(LName);
+        dest.writeString(FName);
         dest.writeString(userPassword);
     }
 }

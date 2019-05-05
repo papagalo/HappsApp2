@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorAccent">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/new_toolbar" />
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/user_pro"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/ic_person_black"
+        android:layout_marginTop="100dp"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/text_view_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="UserName"
+        android:textSize="30dp"
+        android:layout_marginLeft="20dp"
+        android:textColor="@color/black"
+        android:layout_marginTop="100dp"
+        android:layout_below="@id/user_pro"
+        android:padding="10dp"/>
+    <TextView
+        android:id="@+id/text_view_first_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="FirstName"
+        android:textSize="16dp"
+        android:layout_marginLeft="50dp"
+        android:textColor="@color/black"
+        android:layout_below="@id/text_view_user_name"
+        android:padding="10dp"
+        android:layout_margin="10dp"/>
+    <TextView
+        android:id="@+id/text_view_last_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="LastName"
+        android:textSize="16dp"
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/black"
+        android:layout_toRightOf="@id/text_view_first_name"
+        android:layout_below="@id/text_view_user_name"
+        android:padding="10dp"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_view_first_name"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:text="Events you are following: "
+        android:textColor="@color/black"/>
+
+</RelativeLayout>

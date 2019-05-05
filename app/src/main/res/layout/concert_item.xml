@@ -13,20 +13,12 @@
         android:background="@color/haileysGold">
 
         <TextView
-            android:id="@+id/text_view_concertID"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:text="1"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
-        <TextView
             android:id="@+id/text_view_band_name"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Title"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:maxLines="1"
-            android:layout_toStartOf="@id/text_view_concertID"
             android:layout_alignParentStart="true"
             android:ellipsize="end"
             android:textColor="@color/black"/>

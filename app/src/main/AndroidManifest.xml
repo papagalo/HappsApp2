@@ -44,6 +44,9 @@
             android:name=".RegisterUserActivity"
             android:theme="@style/AddEventTheme"
             android:parentActivityName=".LoginActivity"></activity>
+        <activity android:name=".ProfileActivity"
+            android:theme="@style/AddEventTheme"
+            android:parentActivityName=".HomeScreenActivity"></activity>
     </application>
 
 </manifest>

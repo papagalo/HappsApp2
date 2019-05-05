@@ -49,7 +49,6 @@ public class VideoGameAdapter extends ListAdapter<VideoGame, VideoGameAdapter.Vi
         VideoGame currentVideoGame = getItem(position);
         videoGameHolder.textViewVgName.setText(currentVideoGame.getVgName());
         videoGameHolder.textViewLocation.setText(currentVideoGame.getLocation());
-        videoGameHolder.textViewVideoGameID.setText(String.valueOf(currentVideoGame.getVideoGameID()));
     }
 
     public VideoGame getVideoGameAt(int position) {
@@ -66,7 +65,6 @@ public class VideoGameAdapter extends ListAdapter<VideoGame, VideoGameAdapter.Vi
             super(itemView);
             textViewVgName = itemView.findViewById(R.id.text_view_vg_name);
             textViewLocation = itemView.findViewById(R.id.text_view_vg_location);
-            textViewVideoGameID = itemView.findViewById(R.id.text_view_videoGameID);
 
 
             itemView.setOnClickListener(new View.OnClickListener() {

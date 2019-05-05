@@ -48,7 +48,6 @@ public class BoardGameAdapter extends ListAdapter<BoardGame, BoardGameAdapter.Bo
         BoardGame currentBoardGame = getItem(position);
         boardGameHolder.textViewBoardGameName.setText(currentBoardGame.getBgName());
         boardGameHolder.textViewLocation.setText(currentBoardGame.getLocation());
-        boardGameHolder.textViewBoardGameID.setText(String.valueOf(currentBoardGame.getBoardGameID()));
     }
 
     public BoardGame getBoardGameAt(int position) {
@@ -65,8 +64,6 @@ public class BoardGameAdapter extends ListAdapter<BoardGame, BoardGameAdapter.Bo
             super(itemView);
             textViewBoardGameName = itemView.findViewById(R.id.text_view_board_game_name);
             textViewLocation = itemView.findViewById(R.id.text_view_board_game_location);
-            textViewBoardGameID = itemView.findViewById(R.id.text_view_boardGameID);
-
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

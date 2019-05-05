@@ -26,6 +26,7 @@ import com.example.happsapp2.fragments.FragmentBoardGame;
 import com.example.happsapp2.fragments.FragmentConcert;
 import com.example.happsapp2.fragments.FragmentVideoGame;
 import com.example.happsapp2.models.BoardGame;
+import com.example.happsapp2.models.User;
 import com.example.happsapp2.nav_drawer_fragments.LogoutFragment;
 import com.example.happsapp2.nav_drawer_fragments.MyEventsFragment;
 import com.example.happsapp2.nav_drawer_fragments.ProfileFragment;
@@ -49,6 +50,12 @@ public class HomeScreenActivity extends AppCompatActivity implements NavigationV
     static final int ADD_BG_REQUEST = 1;
     BoardGameViewModel boardGameViewModel;
     BoardGameAdapter boardGameAdapter;
+    private User currentUser;
+
+    private String userName;
+    private String lastName;
+    private String firstName;
+    private String passWord;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -84,6 +91,12 @@ public class HomeScreenActivity extends AppCompatActivity implements NavigationV
             }
         });*/
 
+        currentUser = (User) getIntent().getSerializableExtra("current_user_info");
+        Intent nav_intent = getIntent();
+        userName = nav_intent.getStringExtra("current_userName");
+        lastName = nav_intent.getStringExtra("current_last_name");
+        firstName = nav_intent.getStringExtra("current_first_name");
+        passWord = nav_intent.getStringExtra("current_passWord");
 
         mTabLayout = findViewById(R.id.tabLayout_id2);
         mViewPager = findViewById(R.id.viewPager_id);
@@ -108,8 +121,19 @@ public class HomeScreenActivity extends AppCompatActivity implements NavigationV
                 startActivity(intent);*/
                 break;
             case R.id.nav_profile:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new ProfileFragment()).commit();
+                //Gather info passed from the login screen and pass it to the
+                // profile screen so it can be displayed
+                Toast.makeText(this, "UserName: " + userName
+                        + " LastName = " + lastName + " firstName = " + firstName + " passWord = " + passWord, Toast.LENGTH_SHORT).show();
+
+                //Create the bundle to pass to the fragment
+                Intent userIntent = new Intent(this, ProfileActivity.class);
+                //Set up the profileFragment and attach the bundle as the arguments
+                userIntent.putExtra("current_user_username", userName);
+                userIntent.putExtra("current_user_lastname", lastName);
+                userIntent.putExtra("current_user_firstname", firstName);
+                userIntent.putExtra("current_user_password", passWord);
+                startActivity(userIntent);
                 break;
             case R.id.nav_add_event:
                 Intent intent = new Intent(this, SelectAddEvent.class);
@@ -120,8 +144,8 @@ public class HomeScreenActivity extends AppCompatActivity implements NavigationV
                         new MyEventsFragment()).commit();
                 break;
             case R.id.nav_logout:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new LogoutFragment()).commit();
+                Intent logout_intent = new Intent(this, LoginActivity.class);
+                startActivity(logout_intent);
                 break;
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);

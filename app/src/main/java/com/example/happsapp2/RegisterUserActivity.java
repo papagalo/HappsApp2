@@ -58,6 +58,11 @@ public class RegisterUserActivity extends AppCompatActivity {
             return;
         }
 
+        if(newPassword.compareTo(confirmPassword) != 0) {
+            Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         if(!databaseHelper.checkUserNameAlreadyExists(userName)) {
             Toast.makeText(this, "Successfully Registered", Toast.LENGTH_SHORT).show();
             User user = new User(userName, firstName, lastName, newPassword);

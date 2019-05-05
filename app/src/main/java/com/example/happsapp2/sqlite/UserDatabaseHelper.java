@@ -1,16 +1,23 @@
 package com.example.happsapp2.sqlite;
 
+import android.arch.persistence.room.ColumnInfo;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+import android.widget.Toast;
 
+import com.example.happsapp2.LoginActivity;
 import com.example.happsapp2.models.User;
 
 public class UserDatabaseHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 4;
+    public static final String TAG = "BBBOOOOO";
+    private User newUser;
+
+    private static final int DATABASE_VERSION = 6;
 
     private static final String DATABASE_NAME = "HAPPS_DB";
 
@@ -34,7 +41,7 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
     // create table sql query
     private String CREATE_USER_TABLE = "CREATE TABLE " + TABLE_USER + "("
             + COLUMN_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_USER_USERNAME + " TEXT,"
-            + COLUMN_USER_FIRST_NAME + " TEXT," + COLUMN_USER_LAST_NAME + " TEXT," + COLUMN_USER_PASSWORD + " TEXT" + ")";
+            + COLUMN_USER_LAST_NAME + " TEXT," + COLUMN_USER_FIRST_NAME + " TEXT," + COLUMN_USER_PASSWORD + " TEXT" + ")";
 
     // drop table sql query
     private String DROP_USER_TABLE = "DROP TABLE IF EXISTS " + TABLE_USER;
@@ -63,9 +70,9 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put(COLUMN_USER_USERNAME, user.getUserName());
-        values.put(COLUMN_USER_PASSWORD, user.getUserPassword());
-        values.put(COLUMN_USER_FIRST_NAME, user.getFName());
         values.put(COLUMN_USER_LAST_NAME, user.getLName());
+        values.put(COLUMN_USER_FIRST_NAME, user.getFName());
+        values.put(COLUMN_USER_PASSWORD, user.getUserPassword());
 
         // Inserting Row
         db.insert(TABLE_USER, null, values);
@@ -168,6 +175,57 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return (cursorCount > 0);
+    }
+
+    public User getUser(String userName) {
+        // array of columns to fetch
+        String[] columns = {
+                COLUMN_USER_USERNAME,
+                COLUMN_USER_LAST_NAME,
+                COLUMN_USER_FIRST_NAME,
+                COLUMN_USER_PASSWORD
+        };
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // selection criteria
+        String selection = COLUMN_USER_USERNAME + " = ?";
+
+        // selection argument
+        String[] selectionArgs = {userName};
+
+        // query user table with condition
+        /*
+         * Here query function is used to fetch records from user table this function works like an sql query.
+         * SQL query equivalent to this query function is
+         * SELECT user_id FROM user WHERE user_name = 'name;
+         */
+        Cursor cursor = db.query(TABLE_USER, //Table to query
+                columns,                    //columns to return
+                selection,                  //columns for the WHERE clause
+                selectionArgs,              //The values for the WHERE clause
+                null,                       //group the rows
+                null,                      //filter by row groups
+                null);                      //The sort order
+        int cursorCount = cursor.getCount();
+        if (cursorCount > 0) {
+            cursor.moveToFirst();
+            Log.d(TAG, "getUser: " + cursor.getString(0));
+            newUser = new User(cursor.getString(0),
+                    cursor.getString(2),
+                    cursor.getString(1),
+                    cursor.getString(3));
+        }
+
+
+        cursor.close();
+        db.close();
+
+        if (cursorCount > 0) {
+
+            return newUser;
+        }
+
+        return null;
     }
 
 }

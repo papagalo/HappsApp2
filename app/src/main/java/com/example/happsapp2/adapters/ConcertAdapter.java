@@ -53,7 +53,6 @@ public class ConcertAdapter extends ListAdapter<Concert, ConcertAdapter.ConcertH
         Concert currentConcert = getItem(position);
         concertHolder.textViewBandName.setText(currentConcert.getBandName());
         concertHolder.textViewLocation.setText(currentConcert.getLocation());
-        concertHolder.textViewConcertID.setText(String.valueOf(currentConcert.getConcertID()));
     }
 
     public Concert getConcertAt(int position) {
@@ -70,8 +69,6 @@ public class ConcertAdapter extends ListAdapter<Concert, ConcertAdapter.ConcertH
             super(itemView);
             textViewBandName = itemView.findViewById(R.id.text_view_band_name);
             textViewLocation = itemView.findViewById(R.id.text_view_location);
-            textViewConcertID = itemView.findViewById(R.id.text_view_concertID);
-
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
