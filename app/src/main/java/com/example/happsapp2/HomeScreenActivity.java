@@ -1,8 +1,6 @@
 package com.example.happsapp2;
 
 
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,28 +13,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 
-import com.example.happsapp2.adapters.BoardGameAdapter;
 import com.example.happsapp2.adapters.ViewPagerAdapter;
 import com.example.happsapp2.fragments.FragmentBoardGame;
 import com.example.happsapp2.fragments.FragmentConcert;
 import com.example.happsapp2.fragments.FragmentVideoGame;
-import com.example.happsapp2.models.BoardGame;
-import com.example.happsapp2.models.User;
-import com.example.happsapp2.nav_drawer_fragments.LogoutFragment;
-import com.example.happsapp2.nav_drawer_fragments.MyEventsFragment;
-import com.example.happsapp2.nav_drawer_fragments.ProfileFragment;
-import com.example.happsapp2.view_models.BoardGameViewModel;
-import com.example.happsapp2.view_models.ConcertViewModel;
-import com.example.happsapp2.view_models.VideoGameViewModel;
-
-import java.util.List;
-
-import static android.content.ContentValues.TAG;
 
 
 public class HomeScreenActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -44,13 +27,8 @@ public class HomeScreenActivity extends AppCompatActivity implements NavigationV
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private ViewPagerAdapter mViewPagerAdapter;
-    private ConcertViewModel mConcertViewModel;
-    private VideoGameViewModel mVideoGameViewModel;
     private DrawerLayout mDrawerLayout;
     static final int ADD_BG_REQUEST = 1;
-    BoardGameViewModel boardGameViewModel;
-    BoardGameAdapter boardGameAdapter;
-    private User currentUser;
 
     private String userName;
     private String lastName;
@@ -73,25 +51,7 @@ public class HomeScreenActivity extends AppCompatActivity implements NavigationV
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-        /*mVideoGameViewModel = ViewModelProviders.of(this).get(VideoGameViewModel.class);
-        mVideoGameViewModel.getAllVideoGames().observe(this, new Observer<List<VideoGame>>() {
-           @Override
-           public void onChanged(@Nullable List<VideoGame> videoGames) {
-               Toast.makeText(HomeScreenActivity.this,"VIDEOGAMES!!",Toast.LENGTH_SHORT).show();
-           }
-        });
 
-        mConcertViewModel = ViewModelProviders.of(this).get(ConcertViewModel.class);
-        mConcertViewModel.getAllConcerts().observe(this, new Observer<List<Concert>>() {
-            @Override
-            public void onChanged(@Nullable List<Concert> concerts) {
-                //Test for change in db
-                Toast.makeText(HomeScreenActivity.this, "onChanged",Toast.LENGTH_SHORT).show();
-                //This is where the RecyclerView will be updated
-            }
-        });*/
-
-        currentUser = (User) getIntent().getSerializableExtra("current_user_info");
         Intent nav_intent = getIntent();
         userName = nav_intent.getStringExtra("current_userName");
         lastName = nav_intent.getStringExtra("current_last_name");
@@ -105,7 +65,6 @@ public class HomeScreenActivity extends AppCompatActivity implements NavigationV
         mViewPagerAdapter.addFragment(new FragmentBoardGame(),"BoardGame");
         mViewPagerAdapter.addFragment(new FragmentConcert(),"Concert");
         mViewPagerAdapter.addFragment(new FragmentVideoGame(),"VideoGame");
-        //mViewPagerAdapter.addFragment(new FragmentOutdoor(),"Outdoor");
 
         mViewPager.setAdapter(mViewPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
@@ -121,14 +80,7 @@ public class HomeScreenActivity extends AppCompatActivity implements NavigationV
                 startActivity(intent);*/
                 break;
             case R.id.nav_profile:
-                //Gather info passed from the login screen and pass it to the
-                // profile screen so it can be displayed
-                Toast.makeText(this, "UserName: " + userName
-                        + " LastName = " + lastName + " firstName = " + firstName + " passWord = " + passWord, Toast.LENGTH_SHORT).show();
-
-                //Create the bundle to pass to the fragment
                 Intent userIntent = new Intent(this, ProfileActivity.class);
-                //Set up the profileFragment and attach the bundle as the arguments
                 userIntent.putExtra("current_user_username", userName);
                 userIntent.putExtra("current_user_lastname", lastName);
                 userIntent.putExtra("current_user_firstname", firstName);
@@ -140,8 +92,8 @@ public class HomeScreenActivity extends AppCompatActivity implements NavigationV
                 startActivity(intent);
                 break;
             case R.id.nav_my_events:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new MyEventsFragment()).commit();
+                Intent myEventsIntent = new Intent(this, MyEventsActivity.class);
+                startActivity(myEventsIntent);
                 break;
             case R.id.nav_logout:
                 Intent logout_intent = new Intent(this, LoginActivity.class);

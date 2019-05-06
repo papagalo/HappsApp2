@@ -87,7 +87,6 @@ public class FragmentBoardGame extends Fragment{
                 startActivityForResult(intent, EDIT_BG_REQUEST);
             }
         });
-
         return v;
     }
 

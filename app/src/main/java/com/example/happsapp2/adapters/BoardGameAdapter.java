@@ -15,6 +15,7 @@ import com.example.happsapp2.models.BoardGame;
 public class BoardGameAdapter extends ListAdapter<BoardGame, BoardGameAdapter.BoardGameHolder> {
 
     private OnItemClickListener listener;
+    private View.OnLongClickListener longClickListener;
 
     public BoardGameAdapter() {
         super(DIFF_CALLBACK);
@@ -67,13 +68,23 @@ public class BoardGameAdapter extends ListAdapter<BoardGame, BoardGameAdapter.Bo
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View v) { 
                     int position = getAdapterPosition();
                     if (listener != null && position != RecyclerView.NO_POSITION) {
                         listener.onItemClick(getItem(position));
                     }
                 }
             });
+            /*itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    int position = getAdapterPosition();
+                    if (longClickListener != null && position != RecyclerView.NO_POSITION) {
+                        longClickListener.onLongClick(v.);
+                    }
+                    return true;
+                }
+            });*/
         }
     }
 

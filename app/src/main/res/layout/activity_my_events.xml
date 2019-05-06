@@ -4,12 +4,19 @@
     android:layout_height="match_parent"
     android:background="@color/colorAccent">
 
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/new_toolbar" />
+
     <TextView
-        android:id="@+id/user_profile_frag"
+        android:id="@+id/my_events_frag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="This is the User Profile"
+        android:text="This is Where My Events Will Go"
         android:textSize="30dp"
-        android:layout_centerInParent="true"/>
+        android:textAlignment="center"
+        android:layout_centerInParent="true"
+        android:textColor="@color/black"/>
+
 
 </RelativeLayout>
