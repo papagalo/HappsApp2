@@ -32,17 +32,7 @@ public class SelectAddEvent extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_event_selector);
         bgAdapter = new BoardGameAdapter();
-        Toast.makeText(this,"BoardGame On Create", Toast.LENGTH_SHORT).show();
 
-        //View Models?
-        boardGameViewModel = ViewModelProviders.of(this).get(BoardGameViewModel.class);
-        boardGameViewModel.getAllBoardGames().observe(this, new Observer<List<BoardGame>>() {
-            @Override
-            public void onChanged(@Nullable List<BoardGame> boardGames) {
-                Log.d(TAG, "onChanged: BG ACTIVITY");
-                bgAdapter.submitList(boardGames);
-            }
-        });
         //Setup Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -79,7 +69,6 @@ public class SelectAddEvent extends AppCompatActivity {
     public void openBGActivity() {
         Intent intent = new Intent(getApplicationContext(), AddEditBoardGameActivity.class);
         startActivity(intent);
-        //startActivityForResult(intent, ADD_BG_REQUEST);
         finish();
     }
 

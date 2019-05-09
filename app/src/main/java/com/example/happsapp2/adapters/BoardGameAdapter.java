@@ -44,6 +44,8 @@ public class BoardGameAdapter extends ListAdapter<BoardGame, BoardGameAdapter.Bo
         return new BoardGameHolder(itemView);
     }
 
+
+
     @Override
     public void onBindViewHolder(@NonNull BoardGameHolder boardGameHolder, int position) {
         BoardGame currentBoardGame = getItem(position);

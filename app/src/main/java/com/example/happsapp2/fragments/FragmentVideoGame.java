@@ -6,11 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -28,7 +26,6 @@ import com.example.happsapp2.view_models.VideoGameViewModel;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
-import static android.content.ContentValues.TAG;
 
 public class FragmentVideoGame extends Fragment {
     static final int ADD_NOTE_REQUEST = 1;
@@ -49,16 +46,6 @@ public class FragmentVideoGame extends Fragment {
 
         recyclerView = v.findViewById(R.id.video_game_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        //recyclerView.setHasFixedSize(true);
-
-        FloatingActionButton buttonAddVideoGame = v.findViewById(R.id.button_add_Event);
-        buttonAddVideoGame.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), AddEditVideoGameActivity.class);
-                startActivityForResult(intent, ADD_NOTE_REQUEST);
-            }
-        });
 
         adapter = new VideoGameAdapter();
         recyclerView.setAdapter(adapter);
@@ -67,7 +54,6 @@ public class FragmentVideoGame extends Fragment {
         videoGameViewModel.getAllVideoGames().observe(this, new Observer<List<VideoGame>>() {
             @Override
             public void onChanged(@Nullable List<VideoGame> videoGames) {
-                Log.d(TAG, "onChanged: FRAGMENT");
                 adapter.submitList(videoGames);
             }
         });
@@ -145,9 +131,4 @@ public class FragmentVideoGame extends Fragment {
                 return super.onOptionsItemSelected(item);
         }
     }
-   /* @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-    }*/
 }

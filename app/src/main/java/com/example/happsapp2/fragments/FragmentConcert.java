@@ -51,15 +51,6 @@ public class FragmentConcert extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         //recyclerView.setHasFixedSize(true);
 
-        FloatingActionButton buttonAddConcert = v.findViewById(R.id.button_add_Event);
-        buttonAddConcert.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), AddEditConcertActivity.class);
-                startActivityForResult(intent, ADD_NOTE_REQUEST);
-            }
-        });
-
         adapter = new ConcertAdapter();
         recyclerView.setAdapter(adapter);
 
@@ -67,7 +58,6 @@ public class FragmentConcert extends Fragment {
         concertViewModel.getAllConcerts().observe(getActivity(), new Observer<List<Concert>>() {
             @Override
             public void onChanged(@Nullable List<Concert> concerts) {
-                Log.d(TAG, "onChanged: FRAGMENT");
                 adapter.submitList(concerts);
             }
         });

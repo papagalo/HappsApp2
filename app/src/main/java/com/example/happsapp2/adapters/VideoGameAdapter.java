@@ -58,7 +58,6 @@ public class VideoGameAdapter extends ListAdapter<VideoGame, VideoGameAdapter.Vi
     class VideoGameHolder extends RecyclerView.ViewHolder {
         private TextView textViewVgName;
         private TextView textViewLocation;
-        private TextView textViewVideoGameID;
 
 
         public VideoGameHolder(View itemView) {

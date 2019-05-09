@@ -85,7 +85,6 @@ public class AddEditBoardGameActivity extends AppCompatActivity {
         if (id != -1) {
             data.putExtra(EXTRA_BG_ID, id);
         }
-        Toast.makeText(this, "SAVE BG RESULT_OK", Toast.LENGTH_SHORT).show();
         setResult(RESULT_OK, data);
         finish();
     }

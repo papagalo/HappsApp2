@@ -11,6 +11,8 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
+import android.support.v7.widget.helper.ItemTouchUIUtil;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -52,15 +54,6 @@ public class FragmentBoardGame extends Fragment{
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         //recyclerView.setHasFixedSize(true);
 
-        FloatingActionButton buttonAddBoardGame = v.findViewById(R.id.button_add_Event);
-        buttonAddBoardGame.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), AddEditBoardGameActivity.class);
-                startActivityForResult(intent, ADD_BG_REQUEST);
-            }
-        });
-
         adapter = new BoardGameAdapter();
         recyclerView.setAdapter(adapter);
 
@@ -68,7 +61,6 @@ public class FragmentBoardGame extends Fragment{
         boardGameViewModel.getAllBoardGames().observe(getActivity(), new Observer<List<BoardGame>>() {
             @Override
             public void onChanged(@Nullable List<BoardGame> boardGames) {
-                Log.d(TAG, "onChanged: OLD FRAGMENT");
                 adapter.submitList(boardGames);
             }
         });

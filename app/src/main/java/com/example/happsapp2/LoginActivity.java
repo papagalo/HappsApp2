@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void openLoginCheck(String uName, String pw) {
-        Toast.makeText(this, pw, Toast.LENGTH_SHORT).show();
+
         if (databaseHelper.validateUserCredentials(uName, pw)) {
             Intent intent = new Intent(this, HomeScreenActivity.class);
 
@@ -69,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
             intent.putExtra("current_last_name", currentUser.getLName());
             intent.putExtra("current_first_name", currentUser.getFName());
             intent.putExtra("current_passWord", currentUser.getUserPassword());
-
+            Toast.makeText(this, "Welcome " + currentUser.getFName(), Toast.LENGTH_SHORT).show();
             startActivity(intent);
             finish();
         } else {
